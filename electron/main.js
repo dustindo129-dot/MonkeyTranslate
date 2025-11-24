@@ -68,7 +68,9 @@ function startServer() {
 
     console.log('Starting server with API key:', apiKey ? 'configured' : 'not configured');
 
-    serverProcess = spawn('node', [serverPath], {
+    // Use Electron's bundled Node.js instead of requiring system Node.js
+    // process.execPath points to the Electron executable which includes Node.js
+    serverProcess = spawn(process.execPath, [serverPath], {
       env,
       stdio: ['pipe', 'pipe', 'pipe']
     });

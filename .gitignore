@@ -21,6 +21,9 @@ secrets/
 server/src/services/geminiClient.prod.ts
 server/src/services/*.prod.ts
 
+# Documentation about proprietary features (contains sensitive info)
+server/src/services/README.md
+
 # Any files marked as proprietary
 *.proprietary.ts
 *.prod.ts

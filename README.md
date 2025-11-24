@@ -18,6 +18,20 @@
 
 ---
 
+## 🎬 Demo
+
+<div align="center">
+
+<video src="assets/demo.mp4" width="800" controls>
+  Your browser does not support the video tag.
+</video>
+
+*Watch the demo to see MonkeyTranslate in action!*
+
+</div>
+
+---
+
 ## 🎯 Overview
 
 MonkeyTranslate is a sophisticated full-stack application that leverages Google's Gemini AI to extract text from images, translate it into any language, and regenerate the image with translated text while preserving original styling. Built with modern technologies and professional development practices, it serves both as a production desktop application and a showcase of enterprise-grade software architecture.

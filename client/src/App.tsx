@@ -56,6 +56,17 @@ function AppContent() {
       if (healthData.apiKeyConfigured && showApiKeyModal && !isManualModalOpen) {
         setShowApiKeyModal(false);
       }
+    } else if (!hasCheckedApiKey) {
+      // If health check fails (server not ready yet), show modal after a delay
+      // This handles first-run scenario where server might be starting
+      const timer = setTimeout(() => {
+        if (!healthData && !hasCheckedApiKey) {
+          setShowApiKeyModal(true);
+          setHasCheckedApiKey(true);
+        }
+      }, 5000); // Wait 5 seconds for server to start
+
+      return () => clearTimeout(timer);
     }
   }, [healthData, hasCheckedApiKey, showApiKeyModal, isManualModalOpen]);
 

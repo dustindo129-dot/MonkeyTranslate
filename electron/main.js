@@ -1,8 +1,26 @@
 const { app, BrowserWindow, Menu, dialog, ipcMain, shell } = require('electron');
 const path = require('path');
-const { spawn } = require('child_process');
+const { spawn, fork } = require('child_process');
 const fs = require('fs').promises;
 const os = require('os');
+
+// Single instance lock - prevent multiple instances from running
+const gotTheLock = app.requestSingleInstanceLock();
+
+if (!gotTheLock) {
+  // Another instance is already running, quit this one
+  console.log('Another instance is already running. Quitting...');
+  app.quit();
+} else {
+  // Handle second instance attempt - focus the existing window
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    console.log('Second instance detected, focusing existing window...');
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.focus();
+    }
+  });
+}
 
 // Keep a global reference of the window object
 let mainWindow;
@@ -54,7 +72,11 @@ async function saveApiKey(key) {
 // Start the Express server
 function startServer() {
   return new Promise((resolve, reject) => {
-    const serverPath = path.join(__dirname, '../server/dist/server.js');
+    // Determine server path based on whether app is packaged
+    const serverPath = app.isPackaged
+      ? path.join(process.resourcesPath, 'app', 'server', 'dist', 'server.js')
+      : path.join(__dirname, '..', 'server', 'dist', 'server.js');
+
     const env = { ...process.env };
 
     // Set the API key if available
@@ -66,13 +88,27 @@ function startServer() {
     env.PORT = '3001';
     env.NODE_ENV = 'production';
 
-    console.log('Starting server with API key:', apiKey ? 'configured' : 'not configured');
+    console.log('=== SERVER STARTUP DEBUG ===');
+    console.log('App is packaged:', app.isPackaged);
+    console.log('__dirname:', __dirname);
+    console.log('process.resourcesPath:', process.resourcesPath);
+    console.log('Resolved server path:', serverPath);
+    console.log('API key:', apiKey ? 'configured' : 'not configured');
 
-    // Use Electron's bundled Node.js instead of requiring system Node.js
-    // process.execPath points to the Electron executable which includes Node.js
-    serverProcess = spawn(process.execPath, [serverPath], {
+    // Check if server file exists
+    const fs = require('fs');
+    if (!fs.existsSync(serverPath)) {
+      console.error('Server file not found!');
+      return reject(new Error(`Server file not found at: ${serverPath}`));
+    }
+
+    console.log('✓ Server file exists');
+
+    // Use fork() - it uses Node.js bundled with Electron automatically
+    // silent: true means we'll manually capture stdout/stderr via .stdout and .stderr streams
+    serverProcess = fork(serverPath, [], {
       env,
-      stdio: ['pipe', 'pipe', 'pipe']
+      silent: true // We'll capture stdout/stderr manually
     });
 
     serverProcess.stdout.on('data', (data) => {
@@ -83,17 +119,28 @@ function startServer() {
       console.error('Server Error:', data.toString());
     });
 
+    serverProcess.on('error', (error) => {
+      console.error('Failed to start server process:', error);
+      reject(new Error(`Failed to start server: ${error.message}`));
+    });
+
     serverProcess.on('close', (code) => {
       console.log('Server process exited with code:', code);
-      if (code !== 0) {
+      if (code !== 0 && code !== null) {
         reject(new Error(`Server exited with code ${code}`));
       }
     });
 
-    // Give the server time to start
+    // Give the server more time to start (especially on first run)
+    // Server needs to load dependencies, connect to APIs, etc.
     setTimeout(() => {
-      resolve();
-    }, 3000);
+      if (serverProcess && !serverProcess.killed) {
+        console.log('Server startup timeout reached - assuming server started successfully');
+        resolve();
+      } else {
+        reject(new Error('Server process died during startup'));
+      }
+    }, 8000); // Increased from 3 to 8 seconds
   });
 }
 
@@ -373,7 +420,11 @@ app.whenReady().then(async () => {
     console.log('Server started successfully');
   } catch (error) {
     console.error('Failed to start server:', error);
-    dialog.showErrorBox('Server Error', 'Failed to start the application server.');
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    dialog.showErrorBox(
+      'Server Startup Error',
+      `Failed to start the application server.\n\nError: ${errorMessage}\n\nPlease check the console logs for more details.`
+    );
     app.quit();
     return;
   }

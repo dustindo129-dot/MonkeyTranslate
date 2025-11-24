@@ -49,6 +49,7 @@
     "files": [
       "electron/**/*",
       "server/dist/**/*",
+      "server/node_modules/**/*",
       "client/dist/**/*",
       "node_modules/**/*"
     ],

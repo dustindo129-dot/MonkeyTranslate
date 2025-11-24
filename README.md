@@ -165,10 +165,8 @@ monkey-translate/
 
 **No installation, no setup, just run!**
 
-1. **Download** the latest release for your platform:
+1. **Download** the latest release for Windows:
    - 🪟 **Windows**: `MonkeyTranslate-Setup.exe` - Just double-click and run!
-   - 🍎 **macOS**: `MonkeyTranslate.dmg` - Drag to Applications
-   - 🐧 **Linux**: `MonkeyTranslate.AppImage` - Make executable and run
 
 2. **Launch** the application
 3. **Enter your Gemini API key** (get one free [here](https://aistudio.google.com/app/apikey))
@@ -176,7 +174,9 @@ monkey-translate/
 
 👉 [**Download Latest Release**](https://github.com/dustindo129-dot/monkey-translate/releases/latest)
 
-> **Note**: Windows users can run the .exe directly - no installation or Node.js required!
+> **Note**: The Windows .exe runs directly - no installation or Node.js required!
+>
+> **macOS/Linux Users**: See [Option 2](#option-2-development-setup) below to build from source for your platform.
 
 ---
 
@@ -213,18 +213,24 @@ The application will be available at:
 ### Building Desktop Application
 
 ```bash
-# Build for your current platform
-npm run build:win      # Windows (portable .exe)
-npm run build:mac      # macOS (.dmg)
-npm run build:linux    # Linux (AppImage)
+# Windows
+npm run build:win      # Creates portable .exe
 
-# Or build for all platforms at once
-npm run build:electron
+# macOS (requires macOS machine)
+npm run build:mac      # Creates .dmg installer
+
+# Linux
+npm run build:linux    # Creates AppImage
 
 # Output will be in the dist/ folder
 ```
 
-See [BUILDING.md](BUILDING.md) for detailed build instructions and troubleshooting.
+**Note**: Cross-platform building has limitations:
+- Windows builds work from any OS (with Wine on macOS/Linux)
+- macOS builds require an actual macOS machine
+- Linux builds work from Linux or with setup on Windows/macOS
+
+For detailed build instructions, see the development setup documentation.
 
 ---
 
@@ -320,7 +326,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 - ✅ Complete backend structure and API routes
 - ✅ Basic Gemini AI integration (text extraction, translation, image generation)
 - ✅ Electron desktop application framework
-- ✅ Comprehensive documentation
+- ✅ Pre-built Windows executable
+- ✅ Comprehensive documentation and build instructions
 
 **What's Proprietary:**
 - 🔒 Advanced prompt engineering techniques
@@ -355,6 +362,11 @@ For commercial licensing inquiries, please open an issue or contact the maintain
 - **Educational Materials**: Translate textbooks and learning materials
 - **Social Media**: Create multilingual content for global audiences
 - **Game Localization**: Translate game UI and assets
+
+### Platform Support
+- **Windows 10/11** (64-bit) - Pre-built executable available
+- **macOS** - Build from source (requires macOS machine)
+- **Linux** - Build from source
 
 ### Performance Metrics
 - Text extraction: ~2-5 seconds per image

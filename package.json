@@ -1,7 +1,7 @@
 {
   "name": "monkey-translate",
   "version": "1.0.0",
-  "description": "Open-source image translation app using Gemini API",
+  "description": "AI-powered image translation platform using Google Gemini. Extract text, translate to 100+ languages, regenerate images. Built with React, TypeScript, and Electron.",
   "main": "electron/main.js",
   "private": true,
   "scripts": {

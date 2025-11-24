@@ -54,12 +54,12 @@ This is the first public release of MonkeyTranslate under the Business Source Li
   - Optimized color palettes
 
 #### Desktop Application
-- **Cross-Platform Electron App** - Standalone desktop application
-  - Windows executable (.exe)
-  - macOS application (.dmg)
-  - Linux AppImage
+- **Windows Desktop App** - Standalone desktop application
+  - Windows executable (.exe) - Pre-built and ready to download
   - No browser required
+  - No installation needed
   - Offline-first architecture
+  - macOS and Linux: Build from source (instructions included)
 
 - **Native File Management** - System integration
   - Native file picker dialogs
@@ -203,9 +203,8 @@ NODE_ENV=development               # Optional (default: development)
 - No batch export functionality
 
 #### Platform-Specific
-- Windows: Antivirus may flag unsigned executable
-- macOS: App is not notarized (requires security exception)
-- Linux: Tested only on Ubuntu 22.04+
+- Windows: Antivirus may flag unsigned executable (expected for unsigned apps)
+- macOS/Linux: Build from source required (cross-platform builds have limitations)
 
 ### 🔐 Security
 
@@ -233,10 +232,9 @@ npm run dev:client       # Frontend only
 #### Production
 ```bash
 npm run build:all        # Build web version
-npm run build:win        # Build Windows app
-npm run build:mac        # Build macOS app
+npm run build:win        # Build Windows app (pre-built available in releases)
+npm run build:mac        # Build macOS app (requires macOS machine)
 npm run build:linux      # Build Linux app
-npm run build:electron   # Build all platforms
 ```
 
 ### 🙏 Credits

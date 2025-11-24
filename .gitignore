@@ -15,6 +15,18 @@ config/secrets.json
 secrets/
 
 # ============================================================================
+# PROPRIETARY CODE - Keep production versions local
+# ============================================================================
+# Production version with advanced Gemini logic
+server/src/services/geminiClient.prod.ts
+server/src/services/*.prod.ts
+
+# Any files marked as proprietary
+*.proprietary.ts
+*.prod.ts
+*.private.ts
+
+# ============================================================================
 # Dependencies
 # ============================================================================
 node_modules/

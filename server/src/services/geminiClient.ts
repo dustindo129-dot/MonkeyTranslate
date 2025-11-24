@@ -39,7 +39,7 @@ export class GeminiClient {
   }
 
   /**
-   * Extract text regions from an image using basic Gemini AI prompts
+   * Extract text regions from an image using basic AI prompts
    *
    * This is a simplified implementation. The production version includes:
    * - Multi-pass extraction for higher accuracy
@@ -140,7 +140,7 @@ export class GeminiClient {
    * NOTE: This is a PLACEHOLDER for the open-source version.
    *
    * The production version uses:
-   * - Gemini Image Generation API (proprietary integration)
+   * - Advanced image generation APIs (proprietary integration)
    * - Advanced image processing with Sharp
    * - Pixel-perfect text placement algorithms
    * - Style preservation techniques
@@ -174,7 +174,7 @@ export class GeminiClient {
       // pipeline here. This open-source version provides a basic approach.
       //
       // For a complete solution, you would need to:
-      // 1. Use image generation APIs (Gemini, DALL-E, Stable Diffusion)
+      // 1. Use image generation APIs (various services available)
       // 2. Implement text overlay with libraries like Sharp, Canvas, or Jimp
       // 3. Add font matching and style preservation
       // 4. Handle complex layouts and backgrounds
@@ -288,9 +288,9 @@ export class GeminiClient {
  *
  * Feature                     | OSS Version          | Production Version
  * ----------------------------|----------------------|-------------------------
- * Text Extraction             | Basic Gemini prompt  | Multi-pass with validation
+ * Text Extraction             | Basic AI prompt      | Multi-pass with validation
  * Translation                 | Simple batch         | Context-aware optimization
- * Image Generation            | Basic Sharp overlay  | Advanced Gemini Image API
+ * Image Generation            | Basic Sharp overlay  | Advanced image generation APIs
  * Error Handling              | Basic try/catch      | Retry logic + fallbacks
  * Cost Optimization           | None                 | Intelligent batching
  * Image Preprocessing         | Minimal              | Size/format optimization

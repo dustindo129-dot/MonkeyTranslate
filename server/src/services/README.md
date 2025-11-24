@@ -15,8 +15,8 @@ This is the **open-source version** that gets pushed to GitHub. It includes basi
 This is your **production version** with advanced features. **DO NOT push this to GitHub!**
 
 **Protected Features:**
-- Optimized Gemini 2.5 Pro integration
-- Gemini 3 Pro Image generation
+- Optimized model integration (proprietary)
+- Advanced image generation capabilities (proprietary)
 - Advanced prompt engineering
 - Multi-step quality validation
 - Cost optimization strategies

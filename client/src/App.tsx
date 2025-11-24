@@ -26,14 +26,42 @@ function AppContent() {
     refetchInterval: 10000, // Check every 10 seconds
   });
 
+  // Track if we've shown the modal on first launch
+  const [hasCheckedApiKey, setHasCheckedApiKey] = useState(false);
+  // Track if modal was opened manually from menu (vs automatically on first launch)
+  const [isManualModalOpen, setIsManualModalOpen] = useState(false);
+
+  // Listen for File menu -> Configure API Key
+  useEffect(() => {
+    if (window.electronAPI?.onShowApiKeyModal) {
+      console.log('Setting up API key modal listener...');
+      const cleanup = window.electronAPI.onShowApiKeyModal(() => {
+        console.log('Received show-api-key-modal event from menu');
+        setShowApiKeyModal(true);
+        setIsManualModalOpen(true); // Mark as manually opened
+      });
+      return cleanup;
+    } else {
+      console.log('electronAPI.onShowApiKeyModal not available');
+    }
+  }, []);
+
   useEffect(() => {
     if (healthData) {
       setApiKeyConfigured(healthData.apiKeyConfigured);
-      if (!healthData.apiKeyConfigured && pages.length === 0) {
+
+      // Only show modal automatically on first launch if no API key
+      if (!hasCheckedApiKey && !healthData.apiKeyConfigured) {
         setShowApiKeyModal(true);
+        setHasCheckedApiKey(true);
+      }
+
+      // Close modal if API key becomes configured - but ONLY for automatic modal, not manual
+      if (healthData.apiKeyConfigured && showApiKeyModal && !isManualModalOpen) {
+        setShowApiKeyModal(false);
       }
     }
-  }, [healthData, pages.length]);
+  }, [healthData, hasCheckedApiKey, showApiKeyModal, isManualModalOpen]);
 
   // Upload mutation
   const uploadMutation = useMutation({
@@ -97,16 +125,16 @@ function AppContent() {
         <div className="px-4 py-[0.4rem]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <img 
-                src="./logo.png" 
-                alt="MonkeyTranslate" 
-                className="h-24 w-auto rounded-lg object-contain" 
+              <img
+                src="./logo.png"
+                alt="MonkeyTranslate"
+                className="h-24 w-auto rounded-lg object-contain"
               />
             </div>
-            
+
             <div className="flex items-center gap-4">
               <LanguageSelector />
-              
+
               <a
                 href="https://ko-fi.com/dustindo"
                 target="_blank"
@@ -116,18 +144,18 @@ function AppContent() {
                 <Coffee className="w-4 h-4" />
                 {t('supportDevelopment')}
               </a>
-              
+
               {apiKeyConfigured === false && (
                 <button
                   onClick={() => setShowApiKeyModal(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-yellow-500 text-white rounded-lg 
+                  className="flex items-center gap-2 px-4 py-2 bg-yellow-500 text-white rounded-lg
                     hover:bg-yellow-600 font-medium"
                 >
                   <AlertCircle className="w-4 h-4" />
                   {t('configureApiKey')}
                 </button>
               )}
-              
+
               {apiKeyConfigured === true && (
                 <div className="flex items-center gap-2 text-primary-100 text-sm">
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
@@ -173,7 +201,7 @@ function AppContent() {
                   </div>
                 </div>
               )}
-              
+
               <UploadZone onUpload={handleUpload} isUploading={uploadMutation.isPending} />
             </div>
           </div>
@@ -191,7 +219,14 @@ function AppContent() {
       />
 
       {/* API Key Modal */}
-      {showApiKeyModal && <ApiKeyModal onClose={() => setShowApiKeyModal(false)} />}
+      {showApiKeyModal && (
+        <ApiKeyModal
+          onClose={() => {
+            setShowApiKeyModal(false);
+            setIsManualModalOpen(false); // Reset flag when modal closes
+          }}
+        />
+      )}
     </div>
   );
 }

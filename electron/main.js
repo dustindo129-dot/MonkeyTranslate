@@ -37,11 +37,11 @@ async function saveApiKey(key) {
   try {
     const userDataDir = getUserDataPath();
     await fs.mkdir(userDataDir, { recursive: true });
-    
+
     const configPath = getApiKeyPath();
     const config = { apiKey: key };
     await fs.writeFile(configPath, JSON.stringify(config, null, 2));
-    
+
     apiKey = key;
     console.log('API key saved successfully');
     return true;
@@ -56,18 +56,18 @@ function startServer() {
   return new Promise((resolve, reject) => {
     const serverPath = path.join(__dirname, '../server/dist/server.js');
     const env = { ...process.env };
-    
+
     // Set the API key if available
     if (apiKey) {
       env.GEMINI_API_KEY = apiKey;
     }
-    
+
     // Set port and other env vars
     env.PORT = '3001';
     env.NODE_ENV = 'production';
-    
+
     console.log('Starting server with API key:', apiKey ? 'configured' : 'not configured');
-    
+
     serverProcess = spawn('node', [serverPath], {
       env,
       stdio: ['pipe', 'pipe', 'pipe']
@@ -97,10 +97,26 @@ function startServer() {
 
 // Stop the server
 function stopServer() {
+  return new Promise((resolve) => {
   if (serverProcess) {
+      console.log('Stopping server...');
+      serverProcess.on('close', () => {
+        serverProcess = null;
+        resolve();
+      });
     serverProcess.kill();
-    serverProcess = null;
-  }
+    } else {
+      resolve();
+    }
+  });
+}
+
+// Restart the server (used when API key changes)
+async function restartServer() {
+  console.log('Restarting server with new configuration...');
+  await stopServer();
+  await startServer();
+  console.log('Server restarted successfully');
 }
 
 // Create the main window
@@ -121,20 +137,16 @@ function createWindow() {
 
   // Load the client
   const isDev = process.env.NODE_ENV === 'development';
-  const clientPath = isDev 
+  const clientPath = isDev
     ? 'http://localhost:5173'
     : `file://${path.join(__dirname, '../client/dist/index.html')}`;
-  
+
   mainWindow.loadURL(clientPath);
 
   // Show window when ready
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
-    
-    // Check if API key is configured
-    if (!apiKey) {
-      showApiKeyDialog();
-    }
+    // API key modal now handled by React - shown automatically if not configured
   });
 
   // Handle window closed
@@ -156,7 +168,14 @@ function createWindow() {
       submenu: [
         {
           label: 'Configure API Key',
-          click: () => showApiKeyDialog()
+          click: () => {
+            if (mainWindow) {
+              console.log('Sending show-api-key-modal event to renderer');
+              mainWindow.webContents.send('show-api-key-modal');
+            } else {
+              console.log('mainWindow not available');
+            }
+          }
         },
         {
           type: 'separator'
@@ -201,7 +220,7 @@ function createWindow() {
               type: 'info',
               title: 'About MonkeyTranslate',
               message: 'MonkeyTranslate v1.0.0',
-              detail: 'Open-source image translation tool powered by Google\'s Gemini API.\n\nVisit: https://github.com/yourusername/monkey-translate'
+              detail: 'Open-source image translation tool powered by Google\'s Gemini API.\n\nVisit: https://github.com/dustindo129-dot/monkey-translate'
             });
           }
         },
@@ -219,38 +238,6 @@ function createWindow() {
   Menu.setApplicationMenu(menu);
 }
 
-// Show API key configuration dialog
-async function showApiKeyDialog() {
-  const result = await dialog.showInputBox(mainWindow, {
-    title: 'Configure Gemini API Key',
-    label: 'Please enter your Gemini API key:',
-    placeholder: 'AIza...',
-    value: apiKey || '',
-    inputAttrs: {
-      type: 'password'
-    }
-  });
-
-  if (result.response === 0 && result.inputValue) { // OK button pressed
-    const success = await saveApiKey(result.inputValue);
-    if (success) {
-      dialog.showMessageBox(mainWindow, {
-        type: 'info',
-        title: 'API Key Saved',
-        message: 'Your API key has been saved successfully.',
-        detail: 'The application will restart to apply the new configuration.'
-      });
-      
-      // Restart the app to apply new API key
-      app.relaunch();
-      app.exit(0);
-    } else {
-      dialog.showErrorBox('Error', 'Failed to save API key. Please try again.');
-    }
-  } else if (result.response === 0 && !result.inputValue) {
-    dialog.showErrorBox('Error', 'API key cannot be empty.');
-  }
-}
 
 // Custom dialog for input
 async function showInputBox(parentWindow, options) {
@@ -273,24 +260,24 @@ async function showInputBox(parentWindow, options) {
         <head>
           <title>${options.title || 'Input'}</title>
           <style>
-            body { 
-              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-              padding: 20px; 
+            body {
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+              padding: 20px;
               margin: 0;
             }
             .container { display: flex; flex-direction: column; height: 100%; }
             .label { margin-bottom: 10px; }
-            .input { 
-              padding: 8px; 
-              border: 1px solid #ccc; 
+            .input {
+              padding: 8px;
+              border: 1px solid #ccc;
               border-radius: 4px;
               margin-bottom: 20px;
               flex: 1;
             }
-            .buttons { 
-              display: flex; 
-              justify-content: flex-end; 
-              gap: 10px; 
+            .buttons {
+              display: flex;
+              justify-content: flex-end;
+              gap: 10px;
             }
             .button {
               padding: 8px 16px;
@@ -305,9 +292,9 @@ async function showInputBox(parentWindow, options) {
         <body>
           <div class="container">
             <div class="label">${options.label || 'Enter value:'}</div>
-            <input 
-              type="${options.inputAttrs?.type || 'text'}" 
-              class="input" 
+            <input
+              type="${options.inputAttrs?.type || 'text'}"
+              class="input"
               placeholder="${options.placeholder || ''}"
               value="${options.value || ''}"
               id="input"
@@ -320,16 +307,16 @@ async function showInputBox(parentWindow, options) {
           </div>
           <script>
             const { ipcRenderer } = require('electron');
-            
+
             function cancel() {
               ipcRenderer.send('input-dialog-response', { response: 1 });
             }
-            
+
             function ok() {
               const value = document.getElementById('input').value;
               ipcRenderer.send('input-dialog-response', { response: 0, inputValue: value });
             }
-            
+
             // Handle Enter key
             document.getElementById('input').addEventListener('keydown', (e) => {
               if (e.key === 'Enter') ok();
@@ -359,14 +346,25 @@ ipcMain.handle('get-api-key', () => {
 });
 
 ipcMain.handle('save-api-key', async (event, key) => {
-  return await saveApiKey(key);
+  const success = await saveApiKey(key);
+  if (success) {
+    // Restart the server with the new API key
+    try {
+      await restartServer();
+      return true;
+    } catch (error) {
+      console.error('Failed to restart server:', error);
+      return false;
+    }
+  }
+  return false;
 });
 
 // App event handlers
 app.whenReady().then(async () => {
   // Load API key first
   await loadApiKey();
-  
+
   // Start the server
   try {
     await startServer();

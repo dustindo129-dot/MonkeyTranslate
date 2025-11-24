@@ -16,7 +16,7 @@
     "build:electron": "npm run build:all && electron-builder",
     "build:win": "npm run build:all && electron-builder --win --publish=never",
     "build:win-portable": "npm run build:all && electron-builder --win --config.win.target=portable --publish=never",
-    "pack:win": "npm run build:all && electron-packager . MonkeyTranslate --platform=win32 --arch=x64 --out=dist --app-version=1.0.0 --electron-version=28.3.3 --icon=icon.ico --overwrite",
+    "pack:win": "npm run build:all && electron-packager . MonkeyTranslate --platform=win32 --arch=x64 --out=dist --app-version=1.0.0 --electron-version=28.3.3 --icon=client/public/icon.ico --overwrite",
     "pack:mac": "npm run build:all && electron-packager . MonkeyTranslate --platform=darwin --arch=x64 --out=dist --app-version=1.0.0 --electron-version=28.3.3",
     "pack:linux": "npm run build:all && electron-packager . MonkeyTranslate --platform=linux --arch=x64 --out=dist --app-version=1.0.0 --electron-version=28.3.3",
     "build:mac": "npm run build:all && electron-builder --mac",
@@ -54,6 +54,9 @@
     ],
     "afterSign": false,
     "win": {
+      "sign": false,
+      "signDlls": false,
+      "signingHashAlgorithms": [],
       "target": [
         {
           "target": "portable",
@@ -62,7 +65,7 @@
           ]
         }
       ],
-      "icon": "client/public/logo.png"
+      "icon": "client/public/icon.ico"
     },
     "mac": {
       "target": "dmg",

@@ -2,6 +2,7 @@
   "name": "monkey-translate",
   "version": "1.0.0",
   "description": "Open-source image translation app using Gemini API",
+  "main": "electron/main.js",
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
@@ -9,7 +10,17 @@
     "dev:client": "cd client && npm run dev",
     "install:all": "npm install && cd server && npm install && cd ../client && npm install",
     "build": "cd client && npm run build",
-    "build:all": "cd server && npm run build && cd ../client && npm run build"
+    "build:all": "cd server && npm run build && cd ../client && npm run build",
+    "electron": "electron .",
+    "electron:dev": "concurrently \"npm run dev:server\" \"wait-on http://localhost:5173 && electron .\"",
+    "build:electron": "npm run build:all && electron-builder",
+    "build:win": "npm run build:all && electron-builder --win --publish=never",
+    "build:win-portable": "npm run build:all && electron-builder --win --config.win.target=portable --publish=never",
+    "pack:win": "npm run build:all && electron-packager . MonkeyTranslate --platform=win32 --arch=x64 --out=dist --app-version=1.0.0 --electron-version=28.3.3 --icon=icon.ico --overwrite",
+    "pack:mac": "npm run build:all && electron-packager . MonkeyTranslate --platform=darwin --arch=x64 --out=dist --app-version=1.0.0 --electron-version=28.3.3",
+    "pack:linux": "npm run build:all && electron-packager . MonkeyTranslate --platform=linux --arch=x64 --out=dist --app-version=1.0.0 --electron-version=28.3.3",
+    "build:mac": "npm run build:all && electron-builder --mac",
+    "build:linux": "npm run build:all && electron-builder --linux"
   },
   "keywords": [
     "translation",
@@ -18,10 +29,59 @@
     "ocr",
     "ai"
   ],
-  "author": "",
-  "license": "MIT",
+  "author": "Dustin Do",
+  "license": "BUSL-1.1",
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1",
+    "electron-packager": "^17.1.2",
+    "png-to-ico": "^3.0.1",
+    "sharp-cli": "^5.2.0",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.monkeytranslate.app",
+    "productName": "MonkeyTranslate",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*",
+      "server/dist/**/*",
+      "client/dist/**/*",
+      "node_modules/**/*"
+    ],
+    "afterSign": false,
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "client/public/logo.png"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "client/public/logo.png"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "client/public/logo.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "extraMetadata": {
+      "main": "electron/main.js"
+    },
+    "compression": "store",
+    "npmRebuild": false
   }
 }
-

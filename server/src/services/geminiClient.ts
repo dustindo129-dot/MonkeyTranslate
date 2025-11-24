@@ -152,7 +152,7 @@ Return format: ["translated text 1", "translated text 2", ...]`;
           kernel: sharp.kernel.lanczos3 // Better quality for downscaling
         });
         
-        processedImageBuffer = await image.toBuffer();
+        processedImageBuffer = Buffer.from(await image.toBuffer());
         metadata = await image.metadata();
         width = metadata.width || newWidth;
         height = metadata.height || newHeight;
@@ -306,12 +306,12 @@ This is an IMAGE EDITING task. Generate the edited image now with ONLY the text 
         const generatedImage = sharp.default(generatedImageBuffer);
         
         // Scale back to original dimensions
-        finalImageBuffer = await generatedImage
+        finalImageBuffer = Buffer.from(await generatedImage
           .resize(originalWidth, originalHeight, { 
             fit: 'fill',
             kernel: sharp.kernel.lanczos3 // Better quality for upscaling
           })
-          .toBuffer();
+          .toBuffer());
       }
 
       return finalImageBuffer;

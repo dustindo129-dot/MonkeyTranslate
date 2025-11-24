@@ -15,7 +15,6 @@ interface WorkPanelProps {
 
 export function WorkPanel({ regions, onUpdateRegion, onDeleteRegion, onAutoTranslate, isTranslating }: WorkPanelProps) {
   const [selectedLanguage, setSelectedLanguage] = useState('en');
-  const [hoveredRegionId, setHoveredRegionId] = useState<string | null>(null);
   const { t } = useLanguage();
 
   const handleAutoTranslate = () => {
@@ -88,7 +87,6 @@ export function WorkPanel({ regions, onUpdateRegion, onDeleteRegion, onAutoTrans
             index={index}
             onUpdate={onUpdateRegion}
             onDelete={onDeleteRegion}
-            onHover={setHoveredRegionId}
           />
         ))}
       </div>

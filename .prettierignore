@@ -1,9 +1,40 @@
-node_modules
-dist
-build
-coverage
-*.log
-.env
-.env.local
-package-lock.json
+# Build outputs
+dist/
+build/
+coverage/
 
+# Dependencies
+node_modules/
+
+# Generated files
+*.min.js
+*.min.css
+*.bundle.js
+
+# Logs
+*.log
+
+# Package files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment files
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Electron builds
+out/
+release/
+
+# Uploads
+server/uploads/**
+!server/uploads/.gitkeep

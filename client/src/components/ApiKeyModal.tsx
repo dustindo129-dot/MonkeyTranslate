@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AlertCircle, Key } from 'lucide-react';
+import { AlertCircle, Key, Save, ExternalLink } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface ApiKeyModalProps {
@@ -9,6 +9,46 @@ interface ApiKeyModalProps {
 export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
   const { t } = useLanguage();
   const [showInstructions, setShowInstructions] = useState(true);
+  const [apiKey, setApiKey] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  
+  // Check if we're running in Electron
+  const isElectron = typeof window !== 'undefined' && window.electronAPI;
+
+  const handleSaveApiKey = async () => {
+    if (!apiKey.trim()) {
+      setError('API key cannot be empty');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+
+    try {
+      if (isElectron) {
+        // Save to Electron storage
+        const success = await window.electronAPI.saveApiKey(apiKey.trim());
+        if (success) {
+          onClose();
+          // Reload the page to apply the new API key
+          window.location.reload();
+        } else {
+          setError('Failed to save API key');
+        }
+      } else {
+        setError('Direct API key saving is only available in the desktop app. Please follow the manual setup instructions.');
+      }
+    } catch (err) {
+      setError('Failed to save API key: ' + (err as Error).message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const openGoogleAIStudio = () => {
+    window.open('https://aistudio.google.com/app/apikey', '_blank');
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -27,13 +67,65 @@ export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
                   {t('apiKeyRequiredDescription')}
                 </p>
                 <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                  {t('apiKeyRequiredNote')}
+                  {isElectron ? 'Enter your API key below to get started.' : t('apiKeyRequiredNote')}
                 </p>
               </div>
             </div>
           </div>
 
-          {showInstructions && (
+          {/* API Key Input for Electron */}
+          {isElectron && (
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Enter Your API Key</h3>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Gemini API Key
+                  </label>
+                  <input
+                    type="password"
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    placeholder="AIza..."
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg 
+                      focus:ring-2 focus:ring-primary-500 focus:border-primary-500 
+                      dark:bg-gray-700 dark:text-gray-100"
+                    disabled={isLoading}
+                  />
+                </div>
+
+                {error && (
+                  <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg p-3">
+                    <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
+                  </div>
+                )}
+
+                <div className="flex gap-2">
+                  <button
+                    onClick={openGoogleAIStudio}
+                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    Get API Key
+                  </button>
+                  
+                  <button
+                    onClick={handleSaveApiKey}
+                    disabled={isLoading || !apiKey.trim()}
+                    className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg 
+                      hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <Save className="w-4 h-4" />
+                    {isLoading ? 'Saving...' : 'Save & Continue'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Manual Instructions for Web/Development */}
+          {!isElectron && showInstructions && (
             <div className="mb-6 space-y-4">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{t('howToGetApiKey')}</h3>
               
@@ -87,17 +179,19 @@ export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
           )}
 
           <div className="flex gap-3 justify-end">
-            <button
-              onClick={() => setShowInstructions(!showInstructions)}
-              className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium"
-            >
-{showInstructions ? t('hideInstructions') : t('showInstructions')}
-            </button>
+            {!isElectron && (
+              <button
+                onClick={() => setShowInstructions(!showInstructions)}
+                className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium"
+              >
+                {showInstructions ? t('hideInstructions') : t('showInstructions')}
+              </button>
+            )}
             <button
               onClick={onClose}
-              className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 font-medium"
+              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-medium"
             >
-{t('configureLater')}
+              {isElectron ? 'Cancel' : t('configureLater')}
             </button>
           </div>
         </div>

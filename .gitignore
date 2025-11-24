@@ -1,41 +1,300 @@
-# Dependencies
-node_modules/
-client/node_modules/
-server/node_modules/
+# MonkeyTranslate - Git Ignore Configuration
 
-# Environment variables
+# ============================================================================
+# SECURITY - Never commit these!
+# ============================================================================
 .env
 .env.local
-server/.env
-client/.env
+.env.production
+.env.development
+*.pem
+*.key
+*.cert
+*.p12
+config/secrets.json
+secrets/
 
-# Build outputs
+# ============================================================================
+# Dependencies
+# ============================================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnp/
+.pnp.js
+package-lock.json.backup
+
+# ============================================================================
+# Build Outputs
+# ============================================================================
 dist/
+dist-electron/
 build/
-client/dist/
-server/dist/
+out/
+*.local
 
+# Client build
+client/dist/
+client/build/
+
+# Server build
+server/dist/
+server/build/
+
+# Electron builds
+dist/
+release/
+
+# ============================================================================
+# Temporary Files & Uploads
+# ============================================================================
+server/uploads/*
+!server/uploads/.gitkeep
+*.tmp
+*.temp
+tmp/
+temp/
+
+# ============================================================================
+# Operating System Files
+# ============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ============================================================================
+# IDEs & Editors
+# ============================================================================
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+.history/
+*.vsix
+
+# JetBrains (WebStorm, IntelliJ, etc.)
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.idea_modules/
+atlassian-ide-plugin.xml
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+Session.vim
+Sessionx.vim
+.netrwhist
+*~
+tags
+[._]*.un~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ============================================================================
+# Testing & Coverage
+# ============================================================================
+coverage/
+.nyc_output/
+*.lcov
+.jest/
+.cache/
+test-results/
+playwright-report/
+junit.xml
+
+# ============================================================================
 # Logs
+# ============================================================================
 logs/
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
+.pnpm-debug.log*
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# ============================================================================
+# Electron Specific
+# ============================================================================
+*.exe
+*.dmg
+*.app
+*.AppImage
+*.deb
+*.rpm
+*.zip
+*.tar.gz
+*.asar.unpacked/
+builder-debug.yml
+builder-effective-config.yaml
 
-# OS
-.DS_Store
-Thumbs.db
+# electron-builder output (keep main dist for deployment)
+# Uncomment if you don't want to track built apps
+# dist/
 
-# Temp files
-uploads/
-temp/
-*.tmp
+# ============================================================================
+# TypeScript
+# ============================================================================
+*.tsbuildinfo
+*.js.map
+*.d.ts.map
 
-# Config
-config.json
+# ============================================================================
+# Miscellaneous
+# ============================================================================
+.turbo/
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.vuepress/dist
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
+.vscode-test
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+.eslintcache
+.stylelintcache
 
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variable files
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# ============================================================================
+# Custom Project-Specific
+# ============================================================================
+# Backup files
+*.backup
+*.bak
+*.old
+
+# Development notes (if you want to keep them local)
+NOTES.md
+TODO.local.md
+SCRATCH.md
+
+# Large test files
+test-images/large/
+test-data/
+
+# ============================================================================
+# IMPORTANT: Files to TRACK (exceptions to above rules)
+# ============================================================================
+# Keep example environment file
+!.env.example
+
+# Keep uploads directory structure
+!server/uploads/
+!server/uploads/.gitkeep
+
+# Keep important config files
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Keep GitHub templates
+!.github/
+!.github/ISSUE_TEMPLATE/
+!.github/PULL_REQUEST_TEMPLATE.md
+!.github/workflows/
+
+# Keep documentation
+!docs/
+!*.md

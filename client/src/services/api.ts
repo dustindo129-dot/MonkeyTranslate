@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { Page, TextRegion } from '../types';
 
-const API_BASE_URL = '/api';
+// Detect if we're running in Electron
+const isElectron = typeof window !== 'undefined' && window.electronAPI;
+const API_BASE_URL = isElectron ? 'http://localhost:3001/api' : '/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,

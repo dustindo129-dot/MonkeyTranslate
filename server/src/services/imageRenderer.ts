@@ -72,9 +72,9 @@ export class ImageRenderer {
         .flat();
 
       // Composite all overlays onto the image
-      const result = await image
+      const result = Buffer.from(await image
         .composite(overlays)
-        .toBuffer();
+        .toBuffer());
 
       return result;
     } catch (error) {

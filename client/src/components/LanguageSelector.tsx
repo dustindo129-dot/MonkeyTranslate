@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Globe, Check } from 'lucide-react';
-import { LANGUAGES } from '../i18n/translations';
+import { LANGUAGES, LanguageCode } from '../i18n/translations';
 import { useLanguage } from '../contexts/LanguageContext';
 
 export function LanguageSelector() {
@@ -44,7 +44,7 @@ export function LanguageSelector() {
               <button
                 key={lang.code}
                 onClick={() => {
-                  setLanguage(lang.code);
+                  setLanguage(lang.code as LanguageCode);
                   setIsOpen(false);
                 }}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors text-left ${

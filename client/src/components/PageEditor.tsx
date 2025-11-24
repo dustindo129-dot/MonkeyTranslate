@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Page, TextRegion } from '../types';
+import { Page } from '../types';
 import { WorkPanel } from './WorkPanel';
 import { ZoomableImage } from './ZoomableImage';
 import { apiService } from '../services/api';

@@ -1,0 +1,54 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": false,
+    "**/.git": true,
+    "**/.DS_Store": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.git": true,
+    "**/package-lock.json": true
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/uploads/**": true
+  },
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "editor.rulers": [80, 120],
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "files.eol": "\n",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js, ${capture}.d.ts, ${capture}.js.map",
+    "*.tsx": "${capture}.js, ${capture}.d.ts, ${capture}.js.map",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml",
+    "tsconfig.json": "tsconfig.*.json"
+  }
+}
+

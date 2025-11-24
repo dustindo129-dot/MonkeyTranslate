@@ -98,7 +98,7 @@ function AppContent() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <img 
-                src="/logo.png" 
+                src="./logo.png" 
                 alt="MonkeyTranslate" 
                 className="h-24 w-auto rounded-lg object-contain" 
               />

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AlertCircle, Key, Save, ExternalLink, X } from 'lucide-react';
+import { AlertCircle, Key, Save, ExternalLink, X, Eye, EyeOff } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface ApiKeyModalProps {
@@ -13,6 +13,7 @@ export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [existingKey, setExistingKey] = useState<string | null>(null);
+  const [showExistingKey, setShowExistingKey] = useState(false);
 
   // Check if we're running in Electron
   const isElectron = typeof window !== 'undefined' && window.electronAPI;
@@ -108,10 +109,23 @@ export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
               <div className="space-y-4">
                 {existingKey && (
                   <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-3">
-                    <p className="text-sm text-blue-800 dark:text-blue-200">
-                      <strong>{t('currentApiKey')}</strong> {existingKey.substring(0, 10)}...{existingKey.substring(existingKey.length - 4)}
+                    <p className="text-sm text-blue-800 dark:text-blue-200 mb-2">
+                      <strong>{t('currentApiKey')}</strong>
                     </p>
-                    <p className="text-xs text-blue-600 dark:text-blue-300 mt-1">
+                    <div className="flex items-center gap-2">
+                      <code className="flex-1 bg-white dark:bg-gray-700 px-3 py-2 rounded border border-blue-200 dark:border-blue-600 text-xs font-mono break-all">
+                        {showExistingKey ? existingKey : '•'.repeat(existingKey.length)}
+                      </code>
+                      <button
+                        type="button"
+                        onClick={() => setShowExistingKey(!showExistingKey)}
+                        className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-800 rounded transition-colors"
+                        title={showExistingKey ? 'Hide' : 'Show'}
+                      >
+                        {showExistingKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                    </div>
+                    <p className="text-xs text-blue-600 dark:text-blue-300 mt-2">
                       {t('enterNewKeyBelow')}
                     </p>
                   </div>

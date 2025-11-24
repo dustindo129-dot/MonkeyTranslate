@@ -56,19 +56,10 @@ export class GeminiClient {
       const base64Image = imageBuffer.toString('base64');
       const mimeType = this.getMimeType(imagePath);
 
-      // Basic prompt - production version uses optimized prompts
-      const prompt = `Analyze this image and detect all text regions. For each text block, provide:
-1. The exact text content
-2. Its bounding box coordinates (x1, y1, x2, y2) normalized between 0 and 1
-
-Return ONLY a JSON array:
-[
-  {
-    "id": "1",
-    "text": "detected text",
-    "bbox": [x1, y1, x2, y2]
-  }
-]`;
+      // NOTE: Prompt engineering details are proprietary
+      // Production version uses optimized prompts with advanced techniques
+      // This is a simplified placeholder prompt for the open-source version
+      const prompt = this.getTextExtractionPrompt();
 
       const result = await this.model.generateContent([
         {
@@ -120,12 +111,9 @@ Return ONLY a JSON array:
    */
   async translateTexts(texts: string[], targetLanguage: string): Promise<string[]> {
     try {
-      // Basic translation prompt
-      const prompt = `Translate the following texts to ${targetLanguage}. Return ONLY a JSON array of translated strings:
-
-${texts.map((text, i) => `${i + 1}. "${text}"`).join('\n')}
-
-Return format: ["translated text 1", "translated text 2", ...]`;
+      // NOTE: Translation prompt details are proprietary
+      // Production version uses context-aware prompts with optimization techniques
+      const prompt = this.getTranslationPrompt(texts, targetLanguage);
 
       const result = await this.model.generateContent(prompt);
       const response = await result.response;
@@ -254,6 +242,29 @@ Return format: ["translated text 1", "translated text 2", ...]`;
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&apos;');
+  }
+
+  /**
+   * Get text extraction prompt
+   * NOTE: Prompt engineering details are proprietary.
+   * Production version uses advanced techniques, optimized formatting, and multi-step validation.
+   * This simplified version provides basic functionality but does not reveal proprietary prompt engineering.
+   */
+  private getTextExtractionPrompt(): string {
+    // Basic functional prompt - production version uses proprietary optimized prompts
+    return `Analyze image and extract text regions with coordinates. Return JSON array with id, text, and bbox fields.`;
+  }
+
+  /**
+   * Get translation prompt
+   * NOTE: Prompt engineering details are proprietary.
+   * Production version uses advanced techniques, context optimization, and batch processing strategies.
+   * This simplified version provides basic functionality but does not reveal proprietary prompt engineering.
+   */
+  private getTranslationPrompt(texts: string[], targetLanguage: string): string {
+    // Basic functional prompt - production version uses proprietary optimized prompts
+    const textList = texts.map((t, i) => `${i + 1}. ${t}`).join('\n');
+    return `Translate to ${targetLanguage}:\n${textList}\n\nReturn JSON array of translations.`;
   }
 
   /**

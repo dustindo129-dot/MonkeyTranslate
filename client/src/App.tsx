@@ -34,15 +34,11 @@ function AppContent() {
   // Listen for File menu -> Configure API Key
   useEffect(() => {
     if (window.electronAPI?.onShowApiKeyModal) {
-      console.log('Setting up API key modal listener...');
       const cleanup = window.electronAPI.onShowApiKeyModal(() => {
-        console.log('Received show-api-key-modal event from menu');
         setShowApiKeyModal(true);
         setIsManualModalOpen(true); // Mark as manually opened
       });
       return cleanup;
-    } else {
-      console.log('electronAPI.onShowApiKeyModal not available');
     }
   }, []);
 

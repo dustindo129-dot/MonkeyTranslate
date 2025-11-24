@@ -28,29 +28,46 @@ This is your **production version** with advanced features. **DO NOT push this t
 ### `imageRenderer.ts`
 Image processing utilities (can be simplified for open source if needed).
 
-## Development Workflow
+## Development Workflow (Environment-Based)
 
-### When working locally:
-1. Use `geminiClient.prod.ts` by importing it directly
-2. Or create a symlink/copy when needed
+The project now uses **automatic environment-based imports** via `server/src/services/index.ts`.
 
-### Before pushing to GitHub:
-1. Make sure you're using `geminiClient.ts` (OSS version) in imports
-2. The production version stays local only
-3. Git will automatically ignore `*.prod.ts` files
+### How It Works:
+- Imports use `import { GeminiClient } from '../services'` (note: no specific file)
+- The `index.ts` file automatically selects the correct version based on environment variables
+- **No manual file renaming needed!**
 
-## Switching Between Versions
+### Local Development (Use Production Version):
+1. Set `USE_PROD_GEMINI=true` in your `.env` file (or it defaults to `true` in `NODE_ENV=development`)
+2. Run your dev server
+3. Automatically uses `geminiClient.prod.ts` with all advanced features
 
-If you need to use the production version locally, temporarily rename files:
-```bash
-# Use production version
-mv geminiClient.ts geminiClient.oss.ts
-mv geminiClient.prod.ts geminiClient.ts
+### Building for Distribution (Use OSS Version):
+1. Set `USE_PROD_GEMINI=false` in your `.env` file
+2. Or ensure `NODE_ENV` is not `development`
+3. Build/package the app
+4. Automatically uses `geminiClient.ts` (open-source version)
 
-# Switch back before committing
-mv geminiClient.ts geminiClient.prod.ts
-mv geminiClient.oss.ts geminiClient.ts
+### Example `.env` Configuration:
+```env
+# For local development with production features
+NODE_ENV=development
+USE_PROD_GEMINI=true
+GEMINI_API_KEY=your_key_here
+
+# For building release/distribution
+# USE_PROD_GEMINI=false
 ```
 
-Or better yet, use environment-based imports in your code.
+### Environment Variable Priority:
+1. `USE_PROD_GEMINI=true` → Always use production version
+2. `USE_PROD_GEMINI=false` → Always use OSS version
+3. `NODE_ENV=development` (and USE_PROD_GEMINI not set) → Use production version
+4. Default → Use OSS version
+
+### Benefits:
+✅ No manual file switching needed
+✅ Can't accidentally commit production imports
+✅ Easy to test both versions
+✅ Safe for CI/CD pipelines
 

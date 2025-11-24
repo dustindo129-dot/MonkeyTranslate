@@ -1,11 +1,12 @@
-import express from 'express';
-import cors from 'cors';
+// Load environment variables FIRST, before any other imports
 import dotenv from 'dotenv';
 import path from 'path';
-import pagesRouter, { initializeGeminiClient } from './routes/pages';
-
-// Load environment variables
 dotenv.config({ path: path.join(__dirname, '../../.env') });
+
+// Now import other modules (they can use environment variables)
+import express from 'express';
+import cors from 'cors';
+import pagesRouter, { initializeGeminiClient } from './routes/pages';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -33,7 +34,7 @@ if (!GEMINI_API_KEY) {
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ 
+  res.json({
     status: 'ok',
     apiKeyConfigured: !!GEMINI_API_KEY,
     timestamp: new Date().toISOString()
@@ -46,8 +47,8 @@ app.use('/api/pages', pagesRouter);
 // Translate endpoint (separate from pages)
 app.post('/api/translate', async (req, res) => {
   try {
-    const { GeminiClient } = await import('./services/geminiClient');
-    
+    const { GeminiClient } = await import('./services');
+
     if (!GEMINI_API_KEY) {
       return res.status(503).json({ error: 'Gemini API not configured' });
     }
@@ -85,7 +86,7 @@ app.listen(PORT, () => {
   console.log(`\n🚀 MonkeyTranslate Server is running!`);
   console.log(`📡 API: http://localhost:${PORT}`);
   console.log(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
-  
+
   if (!GEMINI_API_KEY) {
     console.log('\n⚠️  To enable the API, please:');
     console.log('   1. Copy .env.example to .env');

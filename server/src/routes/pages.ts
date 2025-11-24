@@ -3,8 +3,7 @@ import multer from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 import fs from 'fs/promises';
-import { GeminiClient } from '../services/geminiClient';
-import { ImageRenderer } from '../services/imageRenderer';
+import { GeminiClient, ImageRenderer } from '../services';
 import { Page, TextRegion } from '../types';
 
 const router = express.Router();
@@ -75,7 +74,7 @@ router.post('/', upload.array('images', 50), async (req: Request, res: Response)
 
       // Store the file path in memory (in production, store in database)
       (page as any).filePath = file.path;
-      
+
       pages.set(pageId, page);
       uploadedPages.push(page);
     }
@@ -203,19 +202,19 @@ router.post('/:id/render', async (req: Request, res: Response) => {
       (page as any).renderedFilePath = renderedPath;
       page.renderedImageUrl = `/api/pages/${id}/rendered-image`;
 
-      res.json({ 
-        success: true, 
+      res.json({
+        success: true,
         imageUrl: page.renderedImageUrl,
-        message: 'Image rendered successfully' 
+        message: 'Image rendered successfully'
       });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       console.error('Error rendering image:', errorMessage);
-      
+
       // Send specific error message to client for better handling
-      return res.status(500).json({ 
-        error: 'Failed to render translated image', 
-        details: errorMessage 
+      return res.status(500).json({
+        error: 'Failed to render translated image',
+        details: errorMessage
       });
     }
   } catch (error) {

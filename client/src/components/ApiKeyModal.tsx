@@ -71,8 +71,8 @@ export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <Key className="w-8 h-8 text-primary-600" />
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{t('apiKeyRequiredTitle')}</h2>
+            <Key className="w-8 h-8 text-primary-600" />
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{t('apiKeyRequiredTitle')}</h2>
             </div>
             <button
               onClick={onClose}
@@ -216,19 +216,19 @@ export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
           <div className="flex gap-3 justify-end">
             {!isElectron && (
               <>
-                <button
-                  onClick={() => setShowInstructions(!showInstructions)}
-                  className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium"
-                >
-                  {showInstructions ? t('hideInstructions') : t('showInstructions')}
-                </button>
-                <button
-                  onClick={onClose}
+              <button
+                onClick={() => setShowInstructions(!showInstructions)}
+                className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium"
+              >
+                {showInstructions ? t('hideInstructions') : t('showInstructions')}
+              </button>
+            <button
+              onClick={onClose}
                   disabled={isLoading}
                   className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                >
+            >
                   {t('configureLater')}
-                </button>
+            </button>
               </>
             )}
           </div>

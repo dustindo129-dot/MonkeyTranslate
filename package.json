@@ -1,0 +1,27 @@
+{
+  "name": "monkey-translate",
+  "version": "1.0.0",
+  "description": "Open-source image translation app using Gemini API",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "build": "cd client && npm run build",
+    "build:all": "cd server && npm run build && cd ../client && npm run build"
+  },
+  "keywords": [
+    "translation",
+    "image",
+    "gemini",
+    "ocr",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
+

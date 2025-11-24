@@ -40,6 +40,35 @@ app.get('/api/health', (req, res) => {
 // API Routes
 app.use('/api/pages', pagesRouter);
 
+// Translate endpoint (separate from pages)
+app.post('/api/translate', async (req, res) => {
+  try {
+    const { GeminiClient } = await import('./services/geminiClient');
+    
+    if (!GEMINI_API_KEY) {
+      return res.status(503).json({ error: 'Gemini API not configured' });
+    }
+
+    const geminiClient = new GeminiClient(GEMINI_API_KEY);
+    const { texts, targetLanguage } = req.body;
+
+    if (!texts || !Array.isArray(texts) || texts.length === 0) {
+      return res.status(400).json({ error: 'Invalid texts array' });
+    }
+
+    if (!targetLanguage) {
+      return res.status(400).json({ error: 'Target language is required' });
+    }
+
+    const translations = await geminiClient.translateTexts(texts, targetLanguage);
+
+    res.json({ translations });
+  } catch (error) {
+    console.error('Error translating texts:', error);
+    res.status(500).json({ error: 'Failed to translate texts' });
+  }
+});
+
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error('Error:', err);

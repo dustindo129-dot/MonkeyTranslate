@@ -55,7 +55,7 @@ export function initializeGeminiClient(apiKey: string) {
 }
 
 // Upload images (batch support)
-router.post('/', upload.array('images', 10), async (req: Request, res: Response) => {
+router.post('/', upload.array('images', 50), async (req: Request, res: Response) => {
   try {
     if (!req.files || !Array.isArray(req.files) || req.files.length === 0) {
       return res.status(400).json({ error: 'No files uploaded' });
@@ -87,7 +87,7 @@ router.post('/', upload.array('images', 10), async (req: Request, res: Response)
   }
 });
 
-// Get image file
+// Get original image file
 router.get('/:id/image', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -102,21 +102,37 @@ router.get('/:id/image', async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Image file not found' });
     }
 
-    // Check if rendered image exists
-    if ((page as any).renderedFilePath) {
-      const renderedPath = (page as any).renderedFilePath;
-      try {
-        await fs.access(renderedPath);
-        return res.sendFile(renderedPath);
-      } catch {
-        // Rendered file doesn't exist, fall back to original
-      }
-    }
-
     res.sendFile(filePath);
   } catch (error) {
     console.error('Error serving image:', error);
     res.status(500).json({ error: 'Failed to serve image' });
+  }
+});
+
+// Get rendered image file
+router.get('/:id/rendered-image', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const page = pages.get(id);
+
+    if (!page) {
+      return res.status(404).json({ error: 'Page not found' });
+    }
+
+    const renderedPath = (page as any).renderedFilePath;
+    if (!renderedPath) {
+      return res.status(404).json({ error: 'Rendered image not found' });
+    }
+
+    try {
+      await fs.access(renderedPath);
+      res.sendFile(renderedPath);
+    } catch {
+      res.status(404).json({ error: 'Rendered image file not found' });
+    }
+  } catch (error) {
+    console.error('Error serving rendered image:', error);
+    res.status(500).json({ error: 'Failed to serve rendered image' });
   }
 });
 
@@ -150,32 +166,6 @@ router.post('/:id/extract', async (req: Request, res: Response) => {
   }
 });
 
-// Translate texts
-router.post('/translate', async (req: Request, res: Response) => {
-  try {
-    if (!geminiClient) {
-      return res.status(503).json({ error: 'Gemini API not configured' });
-    }
-
-    const { texts, targetLanguage } = req.body;
-
-    if (!texts || !Array.isArray(texts) || texts.length === 0) {
-      return res.status(400).json({ error: 'Invalid texts array' });
-    }
-
-    if (!targetLanguage) {
-      return res.status(400).json({ error: 'Target language is required' });
-    }
-
-    const translations = await geminiClient.translateTexts(texts, targetLanguage);
-
-    res.json({ translations });
-  } catch (error) {
-    console.error('Error translating texts:', error);
-    res.status(500).json({ error: 'Failed to translate texts' });
-  }
-});
-
 // Render image with translations
 router.post('/:id/render', async (req: Request, res: Response) => {
   try {
@@ -203,22 +193,31 @@ router.post('/:id/render', async (req: Request, res: Response) => {
       return res.status(503).json({ error: 'Gemini API not configured' });
     }
 
-    // Generate a completely new image with translated text using Nano Banana Pro
-    const renderedBuffer = await geminiClient.renderTranslatedImage(filePath, regions);
+    try {
+      const renderedBuffer = await geminiClient.renderTranslatedImage(filePath, regions);
 
-    // Save the rendered image
-    const renderedFilename = `rendered-${uuidv4()}${path.extname(filePath)}`;
-    const renderedPath = path.join(path.dirname(filePath), renderedFilename);
-    await fs.writeFile(renderedPath, renderedBuffer);
+      const renderedFilename = `rendered-${uuidv4()}${path.extname(filePath)}`;
+      const renderedPath = path.join(path.dirname(filePath), renderedFilename);
+      await fs.writeFile(renderedPath, renderedBuffer);
 
-    (page as any).renderedFilePath = renderedPath;
-    page.renderedImageUrl = `/api/pages/${id}/image`;
+      (page as any).renderedFilePath = renderedPath;
+      page.renderedImageUrl = `/api/pages/${id}/rendered-image`;
 
-    res.json({ 
-      success: true, 
-      imageUrl: page.renderedImageUrl,
-      message: 'Image rendered successfully' 
-    });
+      res.json({ 
+        success: true, 
+        imageUrl: page.renderedImageUrl,
+        message: 'Image rendered successfully' 
+      });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      console.error('Error rendering image:', errorMessage);
+      
+      // Send specific error message to client for better handling
+      return res.status(500).json({ 
+        error: 'Failed to render translated image', 
+        details: errorMessage 
+      });
+    }
   } catch (error) {
     console.error('Error rendering image:', error);
     res.status(500).json({ error: 'Failed to render image with translations' });

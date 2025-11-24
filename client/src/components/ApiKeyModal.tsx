@@ -1,32 +1,33 @@
 import { useState } from 'react';
 import { AlertCircle, Key } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface ApiKeyModalProps {
   onClose: () => void;
 }
 
 export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
+  const { t } = useLanguage();
   const [showInstructions, setShowInstructions] = useState(true);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex items-center gap-3 mb-4">
             <Key className="w-8 h-8 text-primary-600" />
-            <h2 className="text-2xl font-bold text-gray-900">Gemini API Key Required</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{t('apiKeyRequiredTitle')}</h2>
           </div>
 
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 mb-6">
             <div className="flex gap-3">
-              <AlertCircle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+              <AlertCircle className="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm text-yellow-800 font-medium mb-2">
-                  MonkeyTranslate requires a Gemini API key to function
+                <p className="text-sm text-yellow-800 dark:text-yellow-200 font-medium mb-2">
+                  {t('apiKeyRequiredDescription')}
                 </p>
-                <p className="text-sm text-yellow-700">
-                  This is an open-source application. You need to provide your own Google Gemini API key,
-                  which will be stored locally on your machine and never shared.
+                <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                  {t('apiKeyRequiredNote')}
                 </p>
               </div>
             </div>
@@ -34,12 +35,12 @@ export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
 
           {showInstructions && (
             <div className="mb-6 space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900">How to get your API key:</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{t('howToGetApiKey')}</h3>
               
-              <ol className="list-decimal list-inside space-y-3 text-gray-700">
+              <ol className="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300">
                 <li className="ml-4">
                   <span className="ml-2">
-                    Go to{' '}
+                    {t('goToGoogleAIStudio')}{' '}
                     <a
                       href="https://aistudio.google.com/app/apikey"
                       target="_blank"
@@ -51,37 +52,35 @@ export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
                   </span>
                 </li>
                 <li className="ml-4">
-                  <span className="ml-2">Sign in with your Google account</span>
+                  <span className="ml-2">{t('signInGoogle')}</span>
                 </li>
                 <li className="ml-4">
-                  <span className="ml-2">Click "Get API Key" or "Create API Key"</span>
+                  <span className="ml-2">{t('clickGetApiKey')}</span>
                 </li>
                 <li className="ml-4">
-                  <span className="ml-2">Copy your API key</span>
+                  <span className="ml-2">{t('copyApiKey')}</span>
                 </li>
                 <li className="ml-4">
                   <span className="ml-2">
-                    Create a file named <code className="bg-gray-100 px-2 py-1 rounded">.env</code> in the
-                    project root directory
+                    {t('createEnvFile')}
                   </span>
                 </li>
                 <li className="ml-4">
                   <span className="ml-2">
-                    Add this line to the .env file:{' '}
-                    <code className="bg-gray-100 px-2 py-1 rounded text-sm">
+                    {t('addToEnvFile')}{' '}
+                    <code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-sm">
                       GEMINI_API_KEY=your_api_key_here
                     </code>
                   </span>
                 </li>
                 <li className="ml-4">
-                  <span className="ml-2">Restart the server</span>
+                  <span className="ml-2">{t('restartServer')}</span>
                 </li>
               </ol>
 
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
-                <p className="text-sm text-blue-800">
-                  <strong>Note:</strong> The .env file is already in .gitignore, so your API key will
-                  never be committed to version control. Keep your API key private and secure.
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4 mt-4">
+                <p className="text-sm text-blue-800 dark:text-blue-200">
+                  <strong>Note:</strong> {t('apiKeyNote')}
                 </p>
               </div>
             </div>
@@ -90,15 +89,15 @@ export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
           <div className="flex gap-3 justify-end">
             <button
               onClick={() => setShowInstructions(!showInstructions)}
-              className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium"
+              className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium"
             >
-              {showInstructions ? 'Hide' : 'Show'} Instructions
+{showInstructions ? t('hideInstructions') : t('showInstructions')}
             </button>
             <button
               onClick={onClose}
               className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 font-medium"
             >
-              I'll Configure It Later
+{t('configureLater')}
             </button>
           </div>
         </div>

@@ -9,13 +9,14 @@
     "start": "node dist/server.js"
   },
   "dependencies": {
+    "@google/genai": "^1.30.0",
     "@google/generative-ai": "^0.21.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "multer": "^1.4.5-lts.1",
-    "uuid": "^10.0.0",
-    "sharp": "^0.33.5"
+    "sharp": "^0.33.5",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
@@ -27,4 +28,3 @@
     "typescript": "^5.5.3"
   }
 }
-

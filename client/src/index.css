@@ -7,10 +7,6 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -45,12 +41,12 @@ body {
   }
   
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: #888;
+    @apply bg-gray-400 dark:bg-gray-600;
     border-radius: 4px;
   }
   
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    @apply bg-gray-500 dark:bg-gray-500;
   }
 }
 

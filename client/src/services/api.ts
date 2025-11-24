@@ -74,8 +74,9 @@ export const apiService = {
   },
 
   // Get image URL
-  getImageUrl(pageId: string): string {
-    return `${API_BASE_URL}/pages/${pageId}/image?t=${Date.now()}`;
+  getImageUrl(pageId: string, rendered: boolean = false): string {
+    const endpoint = rendered ? 'rendered-image' : 'image';
+    return `${API_BASE_URL}/pages/${pageId}/${endpoint}?t=${Date.now()}`;
   },
 };
 

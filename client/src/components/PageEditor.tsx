@@ -48,12 +48,12 @@ export function PageEditor({ page, onUpdatePage }: PageEditorProps) {
     try {
       const texts = page.regions.map((r) => r.original);
       const { translations } = await apiService.translateTexts(texts, targetLanguage);
-      
+
       const updatedRegions = page.regions.map((region, index) => ({
         ...region,
         translated: translations[index] || region.translated,
       }));
-      
+
       onUpdatePage({ ...page, regions: updatedRegions });
     } catch (error) {
       console.error('Failed to translate:', error);
@@ -68,7 +68,7 @@ export function PageEditor({ page, onUpdatePage }: PageEditorProps) {
     if (isRendering) {
       return;
     }
-    
+
     setIsRendering(true);
     try {
       const result = await apiService.renderImage(page.id, page.regions);
@@ -77,7 +77,7 @@ export function PageEditor({ page, onUpdatePage }: PageEditorProps) {
       setImageKey((prev) => prev + 1);
     } catch (error: any) {
       console.error('Failed to render image:', error);
-      
+
       // Parse error from axios response if available
       let errorMessage = 'Unknown error';
       if (error?.response?.data?.details) {
@@ -85,9 +85,9 @@ export function PageEditor({ page, onUpdatePage }: PageEditorProps) {
       } else if (error?.message) {
         errorMessage = error.message;
       }
-      
+
       if (errorMessage.includes('exceeds pixel limit') || errorMessage.includes('Input image exceeds')) {
-        alert(`${t('generateError')}\n\nImage is too large for processing. Please upload a smaller image (recommended: under 4K resolution).`);
+        alert(`${t('generateError')}\n\n${t('imageTooLarge')}`);
       } else if (errorMessage.includes('Failed to render translated image')) {
         alert(`${t('generateError')}\n\nDetails: ${errorMessage}`);
       } else {
@@ -123,7 +123,7 @@ export function PageEditor({ page, onUpdatePage }: PageEditorProps) {
             <button
               onClick={handleExtractText}
               disabled={isExtracting}
-              className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 
+              className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700
                 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center gap-2 font-medium"
             >
               {isExtracting ? (
@@ -143,7 +143,7 @@ export function PageEditor({ page, onUpdatePage }: PageEditorProps) {
               <button
                 onClick={handleGenerateImage}
                 disabled={isRendering || !hasTranslations}
-                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 
+                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700
                   disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center gap-2 font-medium transition-colors"
                 title={!hasTranslations ? t('noTranslations') : t('generateWithTranslations')}
               >
@@ -165,7 +165,7 @@ export function PageEditor({ page, onUpdatePage }: PageEditorProps) {
           {page.regions.length > 0 && page.renderedImageUrl && (
             <button
               onClick={handleDownload}
-              className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 
+              className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600
                 flex items-center gap-2 font-medium"
             >
               <Download className="w-4 h-4" />

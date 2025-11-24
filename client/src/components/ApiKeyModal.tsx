@@ -31,7 +31,7 @@ export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
 
   const handleSaveApiKey = async () => {
     if (!apiKey.trim()) {
-      setError('API key cannot be empty');
+      setError(t('apiKeyEmpty'));
       return;
     }
 
@@ -42,21 +42,24 @@ export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
       if (isElectron) {
         // Save to Electron storage and restart server
         const success = await window.electronAPI.saveApiKey(apiKey.trim());
+
         if (success) {
-          // Wait a moment for server to restart
-          await new Promise(resolve => setTimeout(resolve, 2000));
+          // Wait longer for server to restart and validate key
+          await new Promise(resolve => setTimeout(resolve, 5000));
+
           onClose();
           // Reload the page to refresh the UI
           window.location.reload();
         } else {
-          setError('Failed to save API key or restart server');
+          setError(t('apiKeySaveError'));
+          setIsLoading(false);
         }
       } else {
-        setError('Direct API key saving is only available in the desktop app. Please follow the manual setup instructions.');
+        setError(t('apiKeyDesktopOnly'));
+        setIsLoading(false);
       }
     } catch (err) {
-      setError('Failed to save API key: ' + (err as Error).message);
-    } finally {
+      setError(t('apiKeySaveFailed') + (err as Error).message);
       setIsLoading(false);
     }
   };
@@ -77,7 +80,7 @@ export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
-              title="Close"
+              title={t('close')}
             >
               <X className="w-6 h-6" />
             </button>
@@ -174,7 +177,7 @@ export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
                       rel="noopener noreferrer"
                       className="text-primary-600 hover:text-primary-700 underline"
                     >
-                      Google AI Studio
+                      {t('googleAIStudio')}
                     </a>
                   </span>
                 </li>
@@ -207,7 +210,7 @@ export function ApiKeyModal({ onClose }: ApiKeyModalProps) {
 
               <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4 mt-4">
                 <p className="text-sm text-blue-800 dark:text-blue-200">
-                  <strong>Note:</strong> {t('apiKeyNote')}
+                  <strong>{t('note')}:</strong> {t('apiKeyNote')}
                 </p>
               </div>
             </div>

@@ -77,6 +77,7 @@ export const translations = {
     uploading: 'Uploading...',
     configureApiKey: 'Configure API Key',
     apiConnected: 'API Connected',
+    apiKeyInvalid: 'Invalid API Key',
     apiKeyNotConfigured: 'API Key Not Configured',
     apiKeyInstructions: 'You need to configure your Gemini API key before using the app. Click "Configure API Key" above for instructions.',
     // Upload zone
@@ -147,6 +148,14 @@ export const translations = {
     saving: 'Saving...',
     saveAndContinue: 'Save & Continue',
     apiKeyPlaceholder: 'Paste your Gemini API key here...',
+    apiKeyEmpty: 'API key cannot be empty',
+    apiKeySaveError: 'Failed to save API key or restart server',
+    apiKeyDesktopOnly: 'Direct API key saving is only available in the desktop app. Please follow the manual setup instructions.',
+    apiKeySaveFailed: 'Failed to save API key: ',
+    close: 'Close',
+    note: 'Note',
+    googleAIStudio: 'Google AI Studio',
+    imageTooLarge: 'Image is too large for processing. Please upload a smaller image (recommended: under 4K resolution).',
   },
 
   es: {
@@ -201,6 +210,7 @@ export const translations = {
     uploading: 'Subiendo...',
     configureApiKey: 'Configurar Clave API',
     apiConnected: 'API Conectada',
+    apiKeyInvalid: 'Clave API Inválida',
     apiKeyNotConfigured: 'Clave API No Configurada',
     apiKeyInstructions: 'Necesitas configurar tu clave API de Gemini antes de usar la aplicación. Haz clic en "Configurar Clave API" arriba para instrucciones.',
     // Upload zone
@@ -270,6 +280,14 @@ export const translations = {
     saving: 'Guardando...',
     saveAndContinue: 'Guardar y Continuar',
     apiKeyPlaceholder: 'Pegue su clave API de Gemini aquí...',
+    apiKeyEmpty: 'La clave API no puede estar vacía',
+    apiKeySaveError: 'Error al guardar la clave API o reiniciar el servidor',
+    apiKeyDesktopOnly: 'El guardado directo de la clave API solo está disponible en la aplicación de escritorio. Por favor, siga las instrucciones de configuración manual.',
+    apiKeySaveFailed: 'Error al guardar la clave API: ',
+    close: 'Cerrar',
+    note: 'Nota',
+    googleAIStudio: 'Google AI Studio',
+    imageTooLarge: 'La imagen es demasiado grande para procesar. Por favor, suba una imagen más pequeña (recomendado: menos de 4K de resolución).',
   },
 
   fr: {
@@ -324,6 +342,7 @@ export const translations = {
     uploading: 'Téléchargement...',
     configureApiKey: 'Configurer la Clé API',
     apiConnected: 'API Connectée',
+    apiKeyInvalid: 'Clé API Invalide',
     apiKeyNotConfigured: 'Clé API Non Configurée',
     apiKeyInstructions: 'Vous devez configurer votre clé API Gemini avant d\'utiliser l\'application. Cliquez sur "Configurer la Clé API" ci-dessus pour les instructions.',
     // Upload zone
@@ -393,6 +412,14 @@ export const translations = {
     saving: 'Enregistrement...',
     saveAndContinue: 'Enregistrer et Continuer',
     apiKeyPlaceholder: 'Collez votre clé API Gemini ici...',
+    apiKeyEmpty: 'La clé API ne peut pas être vide',
+    apiKeySaveError: 'Échec de l\'enregistrement de la clé API ou du redémarrage du serveur',
+    apiKeyDesktopOnly: 'L\'enregistrement direct de la clé API n\'est disponible que dans l\'application de bureau. Veuillez suivre les instructions de configuration manuelle.',
+    apiKeySaveFailed: 'Échec de l\'enregistrement de la clé API: ',
+    close: 'Fermer',
+    note: 'Note',
+    googleAIStudio: 'Google AI Studio',
+    imageTooLarge: 'L\'image est trop grande pour être traitée. Veuillez télécharger une image plus petite (recommandé: moins de 4K de résolution).',
   },
 
   de: {
@@ -449,6 +476,7 @@ export const translations = {
     uploading: 'Hochladen...',
     configureApiKey: 'API-Schlüssel konfigurieren',
     apiConnected: 'API verbunden',
+    apiKeyInvalid: 'Ungültiger API-Schlüssel',
     apiKeyNotConfigured: 'API-Schlüssel nicht konfiguriert',
     apiKeyInstructions: 'Sie müssen Ihren Gemini API-Schlüssel konfigurieren, bevor Sie die App verwenden können. Klicken Sie oben auf "API-Schlüssel konfigurieren" für Anweisungen.',
     // Upload zone
@@ -513,6 +541,14 @@ export const translations = {
     saving: 'Speichern...',
     saveAndContinue: 'Speichern und Fortfahren',
     apiKeyPlaceholder: 'Fügen Sie hier Ihren Gemini API-Schlüssel ein...',
+    apiKeyEmpty: 'Der API-Schlüssel darf nicht leer sein',
+    apiKeySaveError: 'Fehler beim Speichern des API-Schlüssels oder Neustarten des Servers',
+    apiKeyDesktopOnly: 'Das direkte Speichern des API-Schlüssels ist nur in der Desktop-App verfügbar. Bitte folgen Sie den manuellen Einrichtungsanweisungen.',
+    apiKeySaveFailed: 'Fehler beim Speichern des API-Schlüssels: ',
+    close: 'Schließen',
+    note: 'Hinweis',
+    googleAIStudio: 'Google AI Studio',
+    imageTooLarge: 'Das Bild ist zu groß für die Verarbeitung. Bitte laden Sie ein kleineres Bild hoch (empfohlen: unter 4K Auflösung).',
   },
 
   it: {
@@ -567,6 +603,7 @@ export const translations = {
     uploading: 'Caricamento...',
     configureApiKey: 'Configura Chiave API',
     apiConnected: 'API Connessa',
+    apiKeyInvalid: 'Chiave API Non Valida',
     apiKeyNotConfigured: 'Chiave API Non Configurata',
     apiKeyInstructions: 'Devi configurare la tua chiave API Gemini prima di usare l\'app. Clicca su "Configura Chiave API" sopra per le istruzioni.',
 
@@ -635,6 +672,14 @@ export const translations = {
     saving: 'Salvataggio...',
     saveAndContinue: 'Salva e Continua',
     apiKeyPlaceholder: 'Incolla qui la tua chiave API Gemini...',
+    apiKeyEmpty: 'La chiave API non può essere vuota',
+    apiKeySaveError: 'Impossibile salvare la chiave API o riavviare il server',
+    apiKeyDesktopOnly: 'Il salvataggio diretto della chiave API è disponibile solo nell\'app desktop. Si prega di seguire le istruzioni di configurazione manuale.',
+    apiKeySaveFailed: 'Impossibile salvare la chiave API: ',
+    close: 'Chiudi',
+    note: 'Nota',
+    googleAIStudio: 'Google AI Studio',
+    imageTooLarge: 'L\'immagine è troppo grande per essere elaborata. Si prega di caricare un\'immagine più piccola (consigliato: meno di 4K di risoluzione).',
   },
 
   pt: {
@@ -689,6 +734,7 @@ export const translations = {
     uploading: 'Enviando...',
     configureApiKey: 'Configurar Chave API',
     apiConnected: 'API Conectada',
+    apiKeyInvalid: 'Chave API Inválida',
     apiKeyNotConfigured: 'Chave API Não Configurada',
     apiKeyInstructions: 'Você precisa configurar sua chave API Gemini antes de usar o app. Clique em "Configurar Chave API" acima para instruções.',
 
@@ -757,6 +803,14 @@ export const translations = {
     saving: 'Salvando...',
     saveAndContinue: 'Salvar e Continuar',
     apiKeyPlaceholder: 'Cole sua chave API Gemini aqui...',
+    apiKeyEmpty: 'A chave API não pode estar vazia',
+    apiKeySaveError: 'Falha ao salvar a chave API ou reiniciar o servidor',
+    apiKeyDesktopOnly: 'O salvamento direto da chave API está disponível apenas no aplicativo desktop. Por favor, siga as instruções de configuração manual.',
+    apiKeySaveFailed: 'Falha ao salvar a chave API: ',
+    close: 'Fechar',
+    note: 'Nota',
+    googleAIStudio: 'Google AI Studio',
+    imageTooLarge: 'A imagem é muito grande para processar. Por favor, faça upload de uma imagem menor (recomendado: menos de 4K de resolução).',
   },
 
   ru: {
@@ -819,6 +873,7 @@ export const translations = {
     uploading: 'Загрузка...',
     configureApiKey: 'Настроить API ключ',
     apiConnected: 'API подключен',
+    apiKeyInvalid: 'Недействительный API ключ',
     apiKeyNotConfigured: 'API ключ не настроен',
     apiKeyInstructions: 'Вам нужно настроить ваш API ключ Gemini перед использованием приложения. Нажмите "Настроить API ключ" выше для инструкций.',
 
@@ -880,6 +935,14 @@ export const translations = {
     saving: 'Сохранение...',
     saveAndContinue: 'Сохранить и Продолжить',
     apiKeyPlaceholder: 'Вставьте ваш API ключ Gemini здесь...',
+    apiKeyEmpty: 'API ключ не может быть пустым',
+    apiKeySaveError: 'Не удалось сохранить API ключ или перезапустить сервер',
+    apiKeyDesktopOnly: 'Прямое сохранение API ключа доступно только в настольном приложении. Пожалуйста, следуйте инструкциям по ручной настройке.',
+    apiKeySaveFailed: 'Не удалось сохранить API ключ: ',
+    close: 'Закрыть',
+    note: 'Примечание',
+    googleAIStudio: 'Google AI Studio',
+    imageTooLarge: 'Изображение слишком большое для обработки. Пожалуйста, загрузите изображение меньшего размера (рекомендуется: менее 4K разрешения).',
   },
 
   ja: {
@@ -934,6 +997,7 @@ export const translations = {
     uploading: 'アップロード中...',
     configureApiKey: 'APIキーを設定',
     apiConnected: 'API接続済み',
+    apiKeyInvalid: '無効なAPIキー',
     apiKeyNotConfigured: 'APIキーが設定されていません',
     apiKeyInstructions: 'アプリを使用する前にGemini APIキーを設定する必要があります。上の「APIキーを設定」をクリックして手順を確認してください。',
 
@@ -1002,6 +1066,14 @@ export const translations = {
     saving: '保存中...',
     saveAndContinue: '保存して続行',
     apiKeyPlaceholder: 'Gemini APIキーをここに貼り付けてください...',
+    apiKeyEmpty: 'APIキーは空にできません',
+    apiKeySaveError: 'APIキーの保存またはサーバーの再起動に失敗しました',
+    apiKeyDesktopOnly: 'APIキーの直接保存はデスクトップアプリでのみ利用可能です。手動セットアップの手順に従ってください。',
+    apiKeySaveFailed: 'APIキーの保存に失敗しました: ',
+    close: '閉じる',
+    note: '注',
+    googleAIStudio: 'Google AI Studio',
+    imageTooLarge: '画像が大きすぎて処理できません。より小さい画像をアップロードしてください（推奨：4K解像度以下）。',
   },
 
   ko: {
@@ -1056,6 +1128,7 @@ export const translations = {
     uploading: '업로드 중...',
     configureApiKey: 'API 키 구성',
     apiConnected: 'API 연결됨',
+    apiKeyInvalid: '잘못된 API 키',
     apiKeyNotConfigured: 'API 키가 구성되지 않음',
     apiKeyInstructions: '앱을 사용하기 전에 Gemini API 키를 구성해야 합니다. 지침을 보려면 위의 "API 키 구성"을 클릭하세요.',
 
@@ -1124,6 +1197,14 @@ export const translations = {
     saving: '저장 중...',
     saveAndContinue: '저장하고 계속',
     apiKeyPlaceholder: 'Gemini API 키를 여기에 붙여넣으세요...',
+    apiKeyEmpty: 'API 키는 비워둘 수 없습니다',
+    apiKeySaveError: 'API 키 저장 또는 서버 재시작 실패',
+    apiKeyDesktopOnly: 'API 키 직접 저장은 데스크톱 앱에서만 사용할 수 있습니다. 수동 설정 지침을 따르세요.',
+    apiKeySaveFailed: 'API 키 저장 실패: ',
+    close: '닫기',
+    note: '참고',
+    googleAIStudio: 'Google AI Studio',
+    imageTooLarge: '이미지가 너무 커서 처리할 수 없습니다. 더 작은 이미지를 업로드하세요 (권장: 4K 해상도 미만).',
   },
 
   zh: {
@@ -1178,6 +1259,7 @@ export const translations = {
     uploading: '上传中...',
     configureApiKey: '配置API密钥',
     apiConnected: 'API已连接',
+    apiKeyInvalid: '无效的API密钥',
     apiKeyNotConfigured: 'API密钥未配置',
     apiKeyInstructions: '使用应用前需要配置您的Gemini API密钥。点击上方"配置API密钥"查看说明。',
 
@@ -1246,6 +1328,14 @@ export const translations = {
     saving: '保存中...',
     saveAndContinue: '保存并继续',
     apiKeyPlaceholder: '在此处粘贴您的Gemini API密钥...',
+    apiKeyEmpty: 'API密钥不能为空',
+    apiKeySaveError: '保存API密钥或重启服务器失败',
+    apiKeyDesktopOnly: '直接保存API密钥仅在桌面应用程序中可用。请按照手动设置说明操作。',
+    apiKeySaveFailed: '保存API密钥失败: ',
+    close: '关闭',
+    note: '注意',
+    googleAIStudio: 'Google AI Studio',
+    imageTooLarge: '图像太大，无法处理。请上传较小的图像（推荐：4K分辨率以下）。',
   },
 
   ar: {
@@ -1300,6 +1390,7 @@ export const translations = {
     uploading: 'جاري الرفع...',
     configureApiKey: 'تكوين مفتاح API',
     apiConnected: 'API متصل',
+    apiKeyInvalid: 'مفتاح API غير صالح',
     apiKeyNotConfigured: 'مفتاح API غير مكون',
     apiKeyInstructions: 'تحتاج إلى تكوين مفتاح Gemini API الخاص بك قبل استخدام التطبيق. انقر على "تكوين مفتاح API" أعلاه للحصول على التعليمات.',
 
@@ -1368,6 +1459,14 @@ export const translations = {
     saving: 'جاري الحفظ...',
     saveAndContinue: 'حفظ ومتابعة',
     apiKeyPlaceholder: 'الصق مفتاح API الخاص بـ Gemini هنا...',
+    apiKeyEmpty: 'لا يمكن أن يكون مفتاح API فارغًا',
+    apiKeySaveError: 'فشل حفظ مفتاح API أو إعادة تشغيل الخادم',
+    apiKeyDesktopOnly: 'حفظ مفتاح API المباشر متاح فقط في تطبيق سطح المكتب. يرجى اتباع تعليمات الإعداد اليدوي.',
+    apiKeySaveFailed: 'فشل حفظ مفتاح API: ',
+    close: 'إغلاق',
+    note: 'ملاحظة',
+    googleAIStudio: 'Google AI Studio',
+    imageTooLarge: 'الصورة كبيرة جدًا للمعالجة. يرجى تحميل صورة أصغر (موصى به: أقل من 4K دقة).',
   },
 
   hi: {
@@ -1422,6 +1521,7 @@ export const translations = {
     uploading: 'अपलोड हो रहा है...',
     configureApiKey: 'API की कॉन्फ़िगर करें',
     apiConnected: 'API कनेक्ट हो गया',
+    apiKeyInvalid: 'अमान्य API की',
     apiKeyNotConfigured: 'API की कॉन्फ़िगर नहीं की गई',
     apiKeyInstructions: 'ऐप का उपयोग करने से पहले आपको अपनी Gemini API की कॉन्फ़िगर करनी होगी। निर्देशों के लिए ऊपर "API की कॉन्फ़िगर करें" पर क्लिक करें।',
 
@@ -1490,6 +1590,14 @@ export const translations = {
     saving: 'सहेजा जा रहा है...',
     saveAndContinue: 'सहेजें और जारी रखें',
     apiKeyPlaceholder: 'अपनी Gemini API कुंजी यहाँ पेस्ट करें...',
+    apiKeyEmpty: 'API कुंजी खाली नहीं हो सकती',
+    apiKeySaveError: 'API कुंजी सहेजने या सर्वर को पुनरारंभ करने में विफल',
+    apiKeyDesktopOnly: 'API कुंजी का प्रत्यक्ष सहेजना केवल डेस्कटॉप ऐप में उपलब्ध है। कृपया मैनुअल सेटअप निर्देशों का पालन करें।',
+    apiKeySaveFailed: 'API कुंजी सहेजने में विफल: ',
+    close: 'बंद करें',
+    note: 'नोट',
+    googleAIStudio: 'Google AI Studio',
+    imageTooLarge: 'छवि प्रसंस्करण के लिए बहुत बड़ी है। कृपया एक छोटी छवि अपलोड करें (अनुशंसित: 4K रिज़ॉल्यूशन से कम)।',
   },
 
   vi: {
@@ -1544,6 +1652,7 @@ export const translations = {
     uploading: 'Đang tải lên...',
     configureApiKey: 'Cấu hình khóa API',
     apiConnected: 'API đã kết nối',
+    apiKeyInvalid: 'Khóa API không hợp lệ',
     apiKeyNotConfigured: 'Khóa API chưa được cấu hình',
     apiKeyInstructions: 'Bạn cần cấu hình khóa API Gemini trước khi sử dụng ứng dụng. Nhấp "Cấu hình khóa API" ở trên để xem hướng dẫn.',
 
@@ -1612,6 +1721,14 @@ export const translations = {
     saving: 'Đang lưu...',
     saveAndContinue: 'Lưu và Tiếp Tục',
     apiKeyPlaceholder: 'Dán khóa API Gemini của bạn vào đây...',
+    apiKeyEmpty: 'Khóa API không thể để trống',
+    apiKeySaveError: 'Không thể lưu khóa API hoặc khởi động lại máy chủ',
+    apiKeyDesktopOnly: 'Lưu khóa API trực tiếp chỉ có sẵn trong ứng dụng desktop. Vui lòng làm theo hướng dẫn thiết lập thủ công.',
+    apiKeySaveFailed: 'Không thể lưu khóa API: ',
+    close: 'Đóng',
+    note: 'Lưu ý',
+    googleAIStudio: 'Google AI Studio',
+    imageTooLarge: 'Hình ảnh quá lớn để xử lý. Vui lòng tải lên hình ảnh nhỏ hơn (khuyến nghị: dưới độ phân giải 4K).',
   },
 };
 

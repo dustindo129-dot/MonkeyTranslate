@@ -19,6 +19,3 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // Platform info
   platform: process.platform
 });
-
-// Log that preload script has loaded
-console.log('Electron preload script loaded');

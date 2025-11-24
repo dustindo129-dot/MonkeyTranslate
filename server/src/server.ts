@@ -20,7 +20,70 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Check for Gemini API key
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+let GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+let apiKeyValid: boolean | null = null; // null = not tested, true = valid, false = invalid
+let lastValidationTime = 0;
+const VALIDATION_CACHE_MS = 60000; // Cache validation result for 1 minute
+
+// Function to update API key (called when key changes)
+export function updateApiKey(newKey: string) {
+  GEMINI_API_KEY = newKey;
+  // Clear validation cache when key changes
+  apiKeyValid = null;
+  lastValidationTime = 0;
+}
+
+// Validate API key by making a test call
+async function validateApiKey(): Promise<boolean> {
+  if (!GEMINI_API_KEY) {
+    return false;
+  }
+
+  // Return cached result if recent
+  const now = Date.now();
+  if (apiKeyValid !== null && (now - lastValidationTime) < VALIDATION_CACHE_MS) {
+    return apiKeyValid;
+  }
+
+  try {
+    const { GoogleGenerativeAI } = await import('@google/generative-ai');
+    const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+
+    // Try to make a minimal API call to validate the key with a timeout
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+    // Add timeout to prevent hanging
+    const validationPromise = model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: 'hi' }] }]
+    });
+
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Validation timeout')), 10000)
+    );
+
+    await Promise.race([validationPromise, timeoutPromise]);
+
+    apiKeyValid = true;
+    lastValidationTime = now;
+    return true;
+  } catch (error: any) {
+    // Check if it's an authentication error
+    if (error.message?.includes('API key') ||
+        error.message?.includes('API_KEY_INVALID') ||
+        error.status === 400 ||
+        error.status === 401 ||
+        error.status === 403) {
+      apiKeyValid = false;
+      lastValidationTime = now;
+      return false;
+    }
+
+    // For timeout or other errors (network issues, etc.), don't cache the result
+    // Return false but don't update apiKeyValid
+    console.warn('API key validation failed:', error.message);
+    return false;
+  }
+}
 
 if (!GEMINI_API_KEY) {
   console.warn('⚠️  WARNING: GEMINI_API_KEY not found in environment variables');
@@ -30,13 +93,47 @@ if (!GEMINI_API_KEY) {
 } else {
   console.log('✓ Gemini API key found');
   initializeGeminiClient(GEMINI_API_KEY);
+
+  // Validate the key in the background
+  validateApiKey().then(valid => {
+    if (valid) {
+      console.log('✓ Gemini API key validated successfully');
+    } else {
+      console.warn('⚠️  Gemini API key validation failed - key may be invalid');
+    }
+  }).catch(err => {
+    console.warn('⚠️  Could not validate Gemini API key:', err.message);
+  });
 }
 
 // Health check endpoint
-app.get('/api/health', (req, res) => {
+app.get('/api/health', async (req, res) => {
+  // Check if API key changed (updated from environment)
+  const currentKey = process.env.GEMINI_API_KEY;
+  if (currentKey !== GEMINI_API_KEY) {
+    updateApiKey(currentKey || '');
+  }
+
+  // Only validate if we don't have a cached result yet
+  // This prevents repeated validation calls from slowing down the UI
+  let isValid = apiKeyValid;
+
+  // If we haven't validated yet (null), do validation in background
+  if (isValid === null && GEMINI_API_KEY) {
+    // Don't await - validate in background to avoid blocking health check
+    validateApiKey().then(valid => {
+      // Result will be cached for next call
+    });
+  }
+
+  // If key exists but validation is null (not tested yet), assume valid temporarily
+  // This prevents showing "invalid" during initial startup
+  const effectiveValid = GEMINI_API_KEY ? (isValid !== false) : false;
+
   res.json({
     status: 'ok',
     apiKeyConfigured: !!GEMINI_API_KEY,
+    apiKeyValid: effectiveValid,
     timestamp: new Date().toISOString()
   });
 });

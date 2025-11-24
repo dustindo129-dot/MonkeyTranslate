@@ -21,21 +21,12 @@ let _initialized = false;
 function getGeminiClientClass() {
   if (!_initialized) {
     // Check environment variables at runtime (after dotenv has loaded)
-    const useProdVersion = process.env.USE_PROD_GEMINI === 'true' ||
-                          (process.env.NODE_ENV === 'development' && process.env.USE_PROD_GEMINI !== 'false');
+        const useProdVersion = process.env.USE_PROD_GEMINI === 'true' ||
+                                (process.env.NODE_ENV === 'development' && process.env.USE_PROD_GEMINI !== 'false');
 
-    // Debug logging
-    console.log('🔍 Environment check:');
-    console.log(`   USE_PROD_GEMINI: ${process.env.USE_PROD_GEMINI}`);
-    console.log(`   NODE_ENV: ${process.env.NODE_ENV}`);
-    console.log(`   Will use production: ${useProdVersion}`);
-
-    // Log which version is being used
     if (useProdVersion) {
-      console.log('🚀 Using PRODUCTION Gemini client (advanced features enabled)');
       _geminiClientClass = GeminiClientProd;
     } else {
-      console.log('📦 Using OPEN-SOURCE Gemini client (basic features)');
       _geminiClientClass = GeminiClientOSS;
     }
 

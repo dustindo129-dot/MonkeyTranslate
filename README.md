@@ -22,7 +22,7 @@
 
 <div align="center">
 
-<video src="assets/demo.mp4" width="800" controls>
+<video src="https://github.com/dustindo129-dot/MonkeyTranslate/raw/refs/heads/main/assets/demo.mp4" width="800" controls>
   Your browser does not support the video tag.
 </video>
 

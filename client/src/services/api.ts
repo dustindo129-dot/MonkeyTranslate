@@ -14,7 +14,7 @@ const api = axios.create({
 
 export const apiService = {
   // Health check
-  async checkHealth(): Promise<{ status: string; apiKeyConfigured: boolean }> {
+  async checkHealth(): Promise<{ status: string; apiKeyConfigured: boolean; apiKeyValid: boolean }> {
     const response = await api.get('/health');
     return response.data;
   },

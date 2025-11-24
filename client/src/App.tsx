@@ -15,6 +15,7 @@ function AppContent() {
   const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
   const [showApiKeyModal, setShowApiKeyModal] = useState(false);
   const [apiKeyConfigured, setApiKeyConfigured] = useState<boolean | null>(null);
+  const [apiKeyValid, setApiKeyValid] = useState<boolean | null>(null);
   const [isPageListCollapsed, setIsPageListCollapsed] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { t } = useLanguage();
@@ -45,15 +46,17 @@ function AppContent() {
   useEffect(() => {
     if (healthData) {
       setApiKeyConfigured(healthData.apiKeyConfigured);
+      setApiKeyValid(healthData.apiKeyValid);
 
       // Only show modal automatically on first launch if no API key
+      // Don't auto-show for invalid keys - user can click the indicator to reconfigure
       if (!hasCheckedApiKey && !healthData.apiKeyConfigured) {
         setShowApiKeyModal(true);
         setHasCheckedApiKey(true);
       }
 
-      // Close modal if API key becomes configured - but ONLY for automatic modal, not manual
-      if (healthData.apiKeyConfigured && showApiKeyModal && !isManualModalOpen) {
+      // Close modal if API key becomes configured AND valid - but ONLY for automatic modal, not manual
+      if (healthData.apiKeyConfigured && healthData.apiKeyValid && showApiKeyModal && !isManualModalOpen) {
         setShowApiKeyModal(false);
       }
     } else if (!hasCheckedApiKey) {
@@ -163,7 +166,17 @@ function AppContent() {
                 </button>
               )}
 
-              {apiKeyConfigured === true && (
+              {apiKeyConfigured === true && apiKeyValid === false && (
+                <button
+                  onClick={() => setShowApiKeyModal(true)}
+                  className="flex items-center gap-2 text-primary-100 text-sm hover:opacity-80 transition-opacity"
+                >
+                  <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                  {t('apiKeyInvalid')}
+                </button>
+              )}
+
+              {apiKeyConfigured === true && apiKeyValid === true && (
                 <div className="flex items-center gap-2 text-primary-100 text-sm">
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                   {t('apiConnected')}

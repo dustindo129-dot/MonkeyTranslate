@@ -88,21 +88,11 @@ function startServer() {
     env.PORT = '3001';
     env.NODE_ENV = 'production';
 
-    console.log('=== SERVER STARTUP DEBUG ===');
-    console.log('App is packaged:', app.isPackaged);
-    console.log('__dirname:', __dirname);
-    console.log('process.resourcesPath:', process.resourcesPath);
-    console.log('Resolved server path:', serverPath);
-    console.log('API key:', apiKey ? 'configured' : 'not configured');
-
     // Check if server file exists
     const fs = require('fs');
     if (!fs.existsSync(serverPath)) {
-      console.error('Server file not found!');
       return reject(new Error(`Server file not found at: ${serverPath}`));
     }
-
-    console.log('✓ Server file exists');
 
     // Use fork() - it uses Node.js bundled with Electron automatically
     // silent: true means we'll manually capture stdout/stderr via .stdout and .stderr streams
@@ -135,7 +125,6 @@ function startServer() {
     // Server needs to load dependencies, connect to APIs, etc.
     setTimeout(() => {
       if (serverProcess && !serverProcess.killed) {
-        console.log('Server startup timeout reached - assuming server started successfully');
         resolve();
       } else {
         reject(new Error('Server process died during startup'));
@@ -219,10 +208,7 @@ function createWindow() {
           label: 'Configure API Key',
           click: () => {
             if (mainWindow) {
-              console.log('Sending show-api-key-modal event to renderer');
               mainWindow.webContents.send('show-api-key-modal');
-            } else {
-              console.log('mainWindow not available');
             }
           }
         },
@@ -395,18 +381,24 @@ ipcMain.handle('get-api-key', () => {
 });
 
 ipcMain.handle('save-api-key', async (event, key) => {
-  const success = await saveApiKey(key);
-  if (success) {
-    // Restart the server with the new API key
-    try {
-      await restartServer();
-      return true;
-    } catch (error) {
-      console.error('Failed to restart server:', error);
-      return false;
+  try {
+    const success = await saveApiKey(key);
+
+    if (success) {
+      // Restart the server with the new API key
+      try {
+        await restartServer();
+        return true;
+      } catch (error) {
+        console.error('Failed to restart server:', error);
+        return false;
+      }
     }
+    return false;
+  } catch (error) {
+    console.error('Error in save-api-key handler:', error);
+    return false;
   }
-  return false;
 });
 
 // App event handlers

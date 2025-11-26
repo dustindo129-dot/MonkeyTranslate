@@ -4,6 +4,7 @@ import { WorkPanel } from './WorkPanel';
 import { ZoomableImage } from './ZoomableImage';
 import { apiService } from '../services/api';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useEditing } from '../contexts/EditingContext';
 import { Download, Loader2, Scan, Wand2 } from 'lucide-react';
 
 interface PageEditorProps {
@@ -13,6 +14,7 @@ interface PageEditorProps {
 
 export function PageEditor({ page, onUpdatePage }: PageEditorProps) {
   const { t } = useLanguage();
+  const { autoSaveCurrentEdit } = useEditing();
   const [isExtracting, setIsExtracting] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
   const [isRendering, setIsRendering] = useState(false);
@@ -39,6 +41,23 @@ export function PageEditor({ page, onUpdatePage }: PageEditorProps) {
   };
 
   const handleDeleteRegion = (id: string) => {
+    // Mark region as removed instead of deleting it
+    const updatedRegions = page.regions.map((region) =>
+      region.id === id ? { ...region, status: 'removed' as const } : region
+    );
+    onUpdatePage({ ...page, regions: updatedRegions });
+  };
+
+  const handleUndoRemoveRegion = (id: string) => {
+    // Restore removed region to active state
+    const updatedRegions = page.regions.map((region) =>
+      region.id === id ? { ...region, status: 'active' as const } : region
+    );
+    onUpdatePage({ ...page, regions: updatedRegions });
+  };
+
+  const handlePermanentDeleteRegion = (id: string) => {
+    // Permanently delete the region
     const updatedRegions = page.regions.filter((region) => region.id !== id);
     onUpdatePage({ ...page, regions: updatedRegions });
   };
@@ -46,13 +65,21 @@ export function PageEditor({ page, onUpdatePage }: PageEditorProps) {
   const handleAutoTranslate = async (targetLanguage: string) => {
     setIsTranslating(true);
     try {
-      const texts = page.regions.map((r) => r.original);
+      // Only translate active regions
+      const activeRegions = page.regions.filter(region => !region.status || region.status === 'active');
+      const texts = activeRegions.map((r) => r.original);
       const { translations } = await apiService.translateTexts(texts, targetLanguage);
 
-      const updatedRegions = page.regions.map((region, index) => ({
+      let translationIndex = 0;
+      const updatedRegions = page.regions.map((region) => {
+        if (!region.status || region.status === 'active') {
+          return {
         ...region,
-        translated: translations[index] || region.translated,
-      }));
+            translated: translations[translationIndex++] || region.translated,
+          };
+        }
+        return region; // Keep removed/deleted regions unchanged
+      });
 
       onUpdatePage({ ...page, regions: updatedRegions });
     } catch (error) {
@@ -69,9 +96,14 @@ export function PageEditor({ page, onUpdatePage }: PageEditorProps) {
       return;
     }
 
+    // Auto-save any unsaved edits before generating image
+    autoSaveCurrentEdit();
+
     setIsRendering(true);
     try {
-      const result = await apiService.renderImage(page.id, page.regions);
+      // Only include active regions in image generation
+      const activeRegions = page.regions.filter(region => !region.status || region.status === 'active');
+      const result = await apiService.renderImage(page.id, activeRegions);
       onUpdatePage({ ...page, renderedImageUrl: result.imageUrl });
       // Force image reload
       setImageKey((prev) => prev + 1);
@@ -80,18 +112,23 @@ export function PageEditor({ page, onUpdatePage }: PageEditorProps) {
 
       // Parse error from axios response if available
       let errorMessage = 'Unknown error';
+      let errorDetails = '';
+
       if (error?.response?.data?.details) {
         errorMessage = error.response.data.details;
+        errorDetails = error.response.data.duration ? `Duration: ${error.response.data.duration}` : '';
       } else if (error?.message) {
         errorMessage = error.message;
       }
 
-      if (errorMessage.includes('exceeds pixel limit') || errorMessage.includes('Input image exceeds')) {
+      if (errorMessage.includes('Network error') || errorMessage.includes('fetch failed')) {
+        alert(`${t('generateError')}\n\n${t('networkError')}\n\n${errorDetails}`);
+      } else if (errorMessage.includes('exceeds pixel limit') || errorMessage.includes('Input image exceeds')) {
         alert(`${t('generateError')}\n\n${t('imageTooLarge')}`);
       } else if (errorMessage.includes('Failed to render translated image')) {
-        alert(`${t('generateError')}\n\nDetails: ${errorMessage}`);
+        alert(`${t('generateError')}\n\nDetails: ${errorMessage}\n\n${errorDetails}`);
       } else {
-        alert(t('generateError'));
+        alert(`${t('generateError')}\n\n${errorDetails}`);
       }
     } finally {
       setIsRendering(false);
@@ -111,7 +148,8 @@ export function PageEditor({ page, onUpdatePage }: PageEditorProps) {
     document.body.removeChild(link);
   };
 
-  const hasTranslations = page.regions.some((r) => r.original !== r.translated);
+  const activeRegions = page.regions.filter(region => !region.status || region.status === 'active');
+  const hasTranslations = activeRegions.some((r) => r.original !== r.translated);
 
   return (
     <div className="flex-1 flex overflow-hidden">
@@ -139,7 +177,7 @@ export function PageEditor({ page, onUpdatePage }: PageEditorProps) {
               )}
             </button>
 
-            {page.regions.length > 0 && (
+            {page.regions.filter(r => !r.status || r.status === 'active').length > 0 && (
               <button
                 onClick={handleGenerateImage}
                 disabled={isRendering || !hasTranslations}
@@ -201,6 +239,8 @@ export function PageEditor({ page, onUpdatePage }: PageEditorProps) {
               regions={page.regions}
               onUpdateRegion={handleUpdateRegion}
               onDeleteRegion={handleDeleteRegion}
+            onUndoRemoveRegion={handleUndoRemoveRegion}
+            onPermanentDeleteRegion={handlePermanentDeleteRegion}
               onAutoTranslate={handleAutoTranslate}
               isTranslating={isTranslating}
             />

@@ -192,8 +192,16 @@ router.post('/:id/render', async (req: Request, res: Response) => {
       return res.status(503).json({ error: 'Gemini API not configured' });
     }
 
+    console.log(`Starting image rendering for page ${id}...`);
+    const startTime = Date.now();
+
     try {
+      // Render image without timeout limits
       const renderedBuffer = await geminiClient.renderTranslatedImage(filePath, regions);
+
+      const endTime = Date.now();
+      const duration = ((endTime - startTime) / 1000).toFixed(1);
+      console.log(`Image rendering completed in ${duration} seconds`);
 
       const renderedFilename = `rendered-${uuidv4()}${path.extname(filePath)}`;
       const renderedPath = path.join(path.dirname(filePath), renderedFilename);
@@ -205,16 +213,38 @@ router.post('/:id/render', async (req: Request, res: Response) => {
       res.json({
         success: true,
         imageUrl: page.renderedImageUrl,
-        message: 'Image rendered successfully'
+        message: `Image rendered successfully in ${duration} seconds`
       });
     } catch (error) {
+      const endTime = Date.now();
+      const duration = ((endTime - startTime) / 1000).toFixed(1);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-      console.error('Error rendering image:', errorMessage);
+
+      console.error(`Error rendering image after ${duration} seconds:`, errorMessage);
+
+      // Check if it's a network/fetch error
+      if (errorMessage.includes('fetch failed') || errorMessage.includes('network')) {
+        return res.status(503).json({
+          error: 'Network error during image rendering',
+          details: 'There was a network issue connecting to the AI service. Please check your internet connection and try again.',
+          duration: `${duration} seconds`
+        });
+      }
+
+      // Check if image is too large
+      if (errorMessage.includes('exceeds pixel limit') || errorMessage.includes('Input image exceeds')) {
+        return res.status(400).json({
+          error: 'Image too large',
+          details: 'The input image is too large for processing. Please upload a smaller image (recommended: less than 4K resolution).',
+          duration: `${duration} seconds`
+        });
+      }
 
       // Send specific error message to client for better handling
       return res.status(500).json({
         error: 'Failed to render translated image',
-        details: errorMessage
+        details: errorMessage,
+        duration: `${duration} seconds`
       });
     }
   } catch (error) {

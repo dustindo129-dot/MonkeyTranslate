@@ -3,6 +3,7 @@ export interface TextRegion {
   bbox: [number, number, number, number]; // x1, y1, x2, y2 normalized 0-1
   original: string;
   translated: string;
+  status?: 'active' | 'removed' | 'deleted'; // Track region state
 }
 
 export interface Page {

@@ -252,7 +252,13 @@ export class GeminiClient {
    */
   private getTextExtractionPrompt(): string {
     // Basic functional prompt - production version uses proprietary optimized prompts
-    return `Analyze image and extract text regions with coordinates. Return JSON array with id, text, and bbox fields.`;
+    return `Analyze image and extract text regions with coordinates.
+
+Important:
+- Organize text of one bubble into complete paragraphs. Ensure sentences are properly joined according to context.
+- Paragraphs must be coherent and not abruptly interrupted.
+
+Return JSON array with id, text, and bbox fields.`;
   }
 
   /**

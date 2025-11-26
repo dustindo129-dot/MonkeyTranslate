@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { TextRegion } from '../types';
 import { TextRegionItem } from './TextRegionItem';
+import { RemovedRegionItem } from './RemovedRegionItem';
 import { Languages, Loader2, Sparkles } from 'lucide-react';
 import { LANGUAGES } from '../i18n/translations';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -9,11 +10,13 @@ interface WorkPanelProps {
   regions: TextRegion[];
   onUpdateRegion: (id: string, translated: string) => void;
   onDeleteRegion?: (id: string) => void;
+  onUndoRemoveRegion?: (id: string) => void;
+  onPermanentDeleteRegion?: (id: string) => void;
   onAutoTranslate: (targetLanguage: string) => void;
   isTranslating: boolean;
 }
 
-export function WorkPanel({ regions, onUpdateRegion, onDeleteRegion, onAutoTranslate, isTranslating }: WorkPanelProps) {
+export function WorkPanel({ regions, onUpdateRegion, onDeleteRegion, onUndoRemoveRegion, onPermanentDeleteRegion, onAutoTranslate, isTranslating }: WorkPanelProps) {
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const { t } = useLanguage();
 
@@ -22,7 +25,10 @@ export function WorkPanel({ regions, onUpdateRegion, onDeleteRegion, onAutoTrans
     onAutoTranslate(languageName);
   };
 
-  if (regions.length === 0) {
+  const activeRegions = regions.filter(r => !r.status || r.status === 'active');
+  const removedRegions = regions.filter(r => r.status === 'removed');
+
+  if (activeRegions.length === 0 && removedRegions.length === 0) {
     return (
       <div className="flex items-center justify-center h-full text-gray-400 dark:text-gray-500">
         <div className="text-center">
@@ -40,9 +46,9 @@ export function WorkPanel({ regions, onUpdateRegion, onDeleteRegion, onAutoTrans
       <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
         <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3 flex items-center gap-2">
           <Languages className="w-4 h-4" />
-          {t('textRegions')} ({regions.length})
+          {t('textRegions')} ({activeRegions.length})
         </h3>
-        
+
         <div className="flex gap-2">
           <select
             value={selectedLanguage}
@@ -56,11 +62,11 @@ export function WorkPanel({ regions, onUpdateRegion, onDeleteRegion, onAutoTrans
               </option>
             ))}
           </select>
-          
+
           <button
             onClick={handleAutoTranslate}
             disabled={isTranslating}
-            className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 
+            className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700
               disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center gap-2 text-sm font-medium"
           >
             {isTranslating ? (
@@ -80,15 +86,30 @@ export function WorkPanel({ regions, onUpdateRegion, onDeleteRegion, onAutoTrans
 
       {/* Regions list */}
       <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50 dark:bg-gray-900 scrollbar-thin">
-        {regions.map((region, index) => (
-          <TextRegionItem
-            key={region.id}
-            region={region}
-            index={index}
-            onUpdate={onUpdateRegion}
-            onDelete={onDeleteRegion}
-          />
-        ))}
+        {regions.map((region, index) => {
+          if (region.status === 'removed') {
+            return (
+              <RemovedRegionItem
+                key={region.id}
+                region={region}
+                index={index}
+                onUndo={onUndoRemoveRegion}
+                onPermanentDelete={onPermanentDeleteRegion}
+              />
+            );
+          } else if (!region.status || region.status === 'active') {
+            return (
+              <TextRegionItem
+                key={region.id}
+                region={region}
+                index={index}
+                onUpdate={onUpdateRegion}
+                onDelete={onDeleteRegion}
+              />
+            );
+          }
+          return null;
+        })}
       </div>
     </div>
   );

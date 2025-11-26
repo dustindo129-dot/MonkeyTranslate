@@ -1,16 +1,10 @@
 export const LANGUAGES = [
   { code: 'en', name: 'English', nativeName: 'English' },
-  { code: 'es', name: 'Spanish', nativeName: 'Español' },
   { code: 'fr', name: 'French', nativeName: 'Français' },
   { code: 'de', name: 'German', nativeName: 'Deutsch' },
   { code: 'it', name: 'Italian', nativeName: 'Italiano' },
-  { code: 'pt', name: 'Portuguese', nativeName: 'Português' },
-  { code: 'ru', name: 'Russian', nativeName: 'Русский' },
-  { code: 'ja', name: 'Japanese', nativeName: '日本語' },
   { code: 'ko', name: 'Korean', nativeName: '한국어' },
   { code: 'zh', name: 'Chinese', nativeName: '中文' },
-  { code: 'ar', name: 'Arabic', nativeName: 'العربية' },
-  { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी' },
   { code: 'vi', name: 'Vietnamese', nativeName: 'Tiếng Việt' },
 ];
 
@@ -54,6 +48,9 @@ export const translations = {
     translatedText: 'Translated / Replacement Text',
     editTranslation: 'Edit translation',
     removeRegion: 'Remove this region',
+    removed: 'Removed',
+    undo: 'Undo',
+    permanentDelete: 'Delete Forever',
     save: 'Save',
     cancel: 'Cancel',
     modified: 'Modified',
@@ -71,6 +68,8 @@ export const translations = {
     translateError: 'Failed to translate text. Please try again.',
     generateSuccess: 'Image generated successfully! The preview has been updated.',
     generateError: 'Failed to generate translated image. Please try again.',
+    renderTimeout: 'Image rendering timed out. This can happen with large images or complex translations. Please try with a smaller image or fewer text regions.',
+    networkError: 'Network error during image rendering. Please check your internet connection and try again.',
     noTranslations: 'No translations to apply',
 
     // Additional UI
@@ -158,138 +157,6 @@ export const translations = {
     imageTooLarge: 'Image is too large for processing. Please upload a smaller image (recommended: under 4K resolution).',
   },
 
-  es: {
-    appTitle: 'MonkeyTranslate',
-    appSubtitle: 'Traducción de texto en imágenes con IA',
-
-    selectLanguageDescription: 'Elige tu idioma preferido para la interfaz',
-    continue: 'Continuar',
-
-    uploadImages: 'Subir Imágenes',
-    pages: 'Páginas',
-
-    uploadTitle: 'Subir Imágenes para Traducir',
-    uploadDescription: 'Arrastra y suelta imágenes aquí o haz clic para explorar',
-    uploadHint: 'Soporta formatos JPEG, PNG, GIF y WebP',
-    selectFiles: 'Seleccionar Archivos',
-
-    noPages: 'No hay páginas subidas aún',
-    uploadFirst: 'Sube algunas imágenes para comenzar',
-    deleteConfirm: '¿Estás seguro de que quieres eliminar esta página?',
-
-    translated: 'Traducido',
-
-    textRegions: 'Regiones de Texto',
-    noTextExtracted: 'No se ha extraído texto aún',
-    uploadAndExtract: 'Sube una imagen y haz clic en "Extraer Texto" para comenzar',
-    autoTranslate: 'Auto-Traducir',
-    translating: 'Traduciendo...',
-
-    region: 'Región',
-    originalText: 'Texto Original',
-    translatedText: 'Texto Traducido / Reemplazo',
-    editTranslation: 'Editar traducción',
-    removeRegion: 'Eliminar esta región',
-    save: 'Guardar',
-    cancel: 'Cancelar',
-    modified: 'Modificado',
-
-    apiKeyRequired: 'Clave API Requerida',
-    apiKeyDescription: 'Por favor ingresa tu clave API de Google Gemini para usar MonkeyTranslate',
-    getApiKey: 'Obtén tu clave API desde',
-    enterApiKey: 'Ingresa tu clave API',
-    saveApiKey: 'Guardar Clave API',
-
-    extractSuccess: 'Texto extraído exitosamente',
-    extractError: 'Error al extraer texto. Por favor verifica tu configuración de clave API.',
-    translateError: 'Error al traducir texto. Por favor inténtalo de nuevo.',
-    generateSuccess: '¡Imagen generada exitosamente! La vista previa ha sido actualizada.',
-    generateError: 'Error al generar imagen traducida. Por favor inténtalo de nuevo.',
-    noTranslations: 'No hay traducciones para aplicar',
-
-    uploading: 'Subiendo...',
-    configureApiKey: 'Configurar Clave API',
-    apiConnected: 'API Conectada',
-    apiKeyInvalid: 'Clave API Inválida',
-    apiKeyNotConfigured: 'Clave API No Configurada',
-    apiKeyInstructions: 'Necesitas configurar tu clave API de Gemini antes de usar la aplicación. Haz clic en "Configurar Clave API" arriba para instrucciones.',
-    // Upload zone
-    dropImagesHere: 'Suelta imágenes aquí o haz clic para explorar',
-    dropImagesHereActive: 'Suelta las imágenes aquí...',
-    supportedFormats: 'Soporta PNG, JPG, GIF y WEBP (hasta 10MB por imagen)',
-    multipleUpload: 'Puedes subir múltiples imágenes a la vez',
-
-    // Page editor
-    extractText: 'Extraer Texto',
-    extracting: 'Extrayendo...',
-    generateTranslatedImage: 'Generar Imagen Traducida',
-    generating: 'Generando...',
-    downloadRegeneratedImage: 'Descargar Imagen Regenerada',
-    originalImage: 'Imagen Original',
-    regeneratedImage: 'Imagen Regenerada',
-    noRegeneratedImage: 'Aún no hay imagen regenerada',
-    clickToGenerate: 'Haz clic en "Generar Imagen Traducida" para crear una',
-    generateWithTranslations: 'Generar imagen con traducciones',
-    noImageAvailable: 'No hay imagen regenerada disponible. Por favor genera una primero.',
-
-    // Page list
-    deletePage: 'Eliminar página',
-    expandPages: 'Expandir páginas',
-    collapsePages: 'Contraer páginas',
-
-    // API Key Modal
-    signInGoogle: 'Inicia sesión con tu cuenta de Google',
-    clickGetApiKey: 'Haz clic en "Obtener Clave API" o "Crear Clave API"',
-    copyApiKey: 'Copia tu clave API',
-    createEnvFile: 'Crea un archivo llamado .env en el directorio raíz del proyecto',
-    addToEnvFile: 'Agrega esta línea al archivo .env:',
-    restartServer: 'Reinicia el servidor',
-    apiKeyNote: 'El archivo .env ya está en .gitignore, por lo que tu clave API nunca se enviará al control de versiones. Mantén tu clave API privada y segura.',
-    hideInstructions: 'Ocultar Instrucciones',
-    showInstructions: 'Mostrar Instrucciones',
-    configureLater: 'Lo configuraré más tarde',
-
-    // Language selector
-    selectLanguage: 'Seleccionar Idioma',
-
-    supportDevelopment: 'Apoyar el Desarrollo',
-
-    // Additional missing translations
-    translatedTag: 'Traducido',
-    regions: 'regiones',
-    uploadError: 'Error al subir imágenes. Por favor inténtalo de nuevo.',
-    apiKeyRequiredTitle: 'Clave API de Gemini Requerida',
-    apiKeyRequiredDescription: 'MonkeyTranslate requiere una clave API de Gemini para funcionar',
-    apiKeyRequiredNote: 'Esta es una aplicación de código abierto. Necesitas proporcionar tu propia clave API de Google Gemini, que se almacenará localmente en tu máquina y nunca se compartirá.',
-    howToGetApiKey: 'Cómo obtener tu clave API:',
-    goToGoogleAIStudio: 'Ir a',
-
-    // Zoom controls
-    zoomIn: 'Acercar',
-    zoomOut: 'Alejar',
-    doubleClickToResetZoom: 'Doble clic para restablecer el zoom',
-
-    // API Key Modal - Electron specific
-    enterApiKeyBelow: 'Ingrese su clave API a continuación para comenzar.',
-    enterYourApiKey: 'Ingrese Su Clave API',
-    currentApiKey: 'Clave API Actual:',
-    enterNewKeyBelow: 'Ingrese una nueva clave a continuación para reemplazarla',
-    newApiKey: 'Nueva Clave API',
-    geminiApiKey: 'Clave API de Gemini',
-    getApiKeyButton: 'Obtener Clave API',
-    saving: 'Guardando...',
-    saveAndContinue: 'Guardar y Continuar',
-    apiKeyPlaceholder: 'Pegue su clave API de Gemini aquí...',
-    apiKeyEmpty: 'La clave API no puede estar vacía',
-    apiKeySaveError: 'Error al guardar la clave API o reiniciar el servidor',
-    apiKeyDesktopOnly: 'El guardado directo de la clave API solo está disponible en la aplicación de escritorio. Por favor, siga las instrucciones de configuración manual.',
-    apiKeySaveFailed: 'Error al guardar la clave API: ',
-    close: 'Cerrar',
-    note: 'Nota',
-    googleAIStudio: 'Google AI Studio',
-    imageTooLarge: 'La imagen es demasiado grande para procesar. Por favor, suba una imagen más pequeña (recomendado: menos de 4K de resolución).',
-  },
-
   fr: {
     appTitle: 'MonkeyTranslate',
     appSubtitle: 'Traduction de texte d\'image alimentée par l\'IA',
@@ -322,6 +189,9 @@ export const translations = {
     translatedText: 'Texte Traduit / Remplacement',
     editTranslation: 'Modifier la traduction',
     removeRegion: 'Supprimer cette région',
+    removed: 'Supprimé',
+    undo: 'Annuler',
+    permanentDelete: 'Supprimer définitivement',
     save: 'Enregistrer',
     cancel: 'Annuler',
     modified: 'Modifié',
@@ -337,6 +207,8 @@ export const translations = {
     translateError: 'Échec de la traduction du texte. Veuillez réessayer.',
     generateSuccess: 'Image générée avec succès ! L\'aperçu a été mis à jour.',
     generateError: 'Échec de la génération de l\'image traduite. Veuillez réessayer.',
+    renderTimeout: 'Le rendu de l\'image a expiré. Cela peut se produire avec de grandes images ou des traductions complexes. Essayez avec une image plus petite ou moins de régions de texte.',
+    networkError: 'Erreur réseau lors du rendu de l\'image. Veuillez vérifier votre connexion Internet et réessayer.',
     noTranslations: 'Aucune traduction à appliquer',
 
     uploading: 'Téléchargement...',
@@ -456,6 +328,9 @@ export const translations = {
     translatedText: 'Übersetzter / Ersatztext',
     editTranslation: 'Übersetzung bearbeiten',
     removeRegion: 'Diesen Bereich entfernen',
+    removed: 'Entfernt',
+    undo: 'Rückgängig',
+    permanentDelete: 'Dauerhaft löschen',
     save: 'Speichern',
     cancel: 'Abbrechen',
     modified: 'Geändert',
@@ -471,6 +346,8 @@ export const translations = {
     translateError: 'Fehler beim Übersetzen des Textes. Bitte versuchen Sie es erneut.',
     generateSuccess: 'Bild erfolgreich generiert! Die Vorschau wurde aktualisiert.',
     generateError: 'Fehler beim Generieren des übersetzten Bildes. Bitte versuchen Sie es erneut.',
+    renderTimeout: 'Das Rendern des Bildes hat das Zeitlimit überschritten. Dies kann bei großen Bildern oder komplexen Übersetzungen passieren. Versuchen Sie es mit einem kleineren Bild oder weniger Textbereichen.',
+    networkError: 'Netzwerkfehler beim Rendern des Bildes. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.',
     noTranslations: 'Keine Übersetzungen anzuwenden',
 
     uploading: 'Hochladen...',
@@ -583,6 +460,9 @@ export const translations = {
     translatedText: 'Testo Tradotto / Sostituzione',
     editTranslation: 'Modifica traduzione',
     removeRegion: 'Rimuovi questa regione',
+    removed: 'Rimosso',
+    undo: 'Annulla',
+    permanentDelete: 'Elimina per sempre',
     save: 'Salva',
     cancel: 'Annulla',
     modified: 'Modificato',
@@ -598,6 +478,8 @@ export const translations = {
     translateError: 'Errore nella traduzione del testo. Riprova.',
     generateSuccess: 'Immagine generata con successo! L\'anteprima è stata aggiornata.',
     generateError: 'Errore nella generazione dell\'immagine tradotta. Riprova.',
+    renderTimeout: 'Il rendering dell\'immagine è scaduto. Questo può accadere con immagini grandi o traduzioni complesse. Prova con un\'immagine più piccola o meno regioni di testo.',
+    networkError: 'Errore di rete durante il rendering dell\'immagine. Controlla la tua connessione Internet e riprova.',
     noTranslations: 'Nessuna traduzione da applicare',
 
     uploading: 'Caricamento...',
@@ -682,400 +564,6 @@ export const translations = {
     imageTooLarge: 'L\'immagine è troppo grande per essere elaborata. Si prega di caricare un\'immagine più piccola (consigliato: meno di 4K di risoluzione).',
   },
 
-  pt: {
-    appTitle: 'MonkeyTranslate',
-    appSubtitle: 'Tradução de texto de imagem alimentada por IA',
-
-    selectLanguageDescription: 'Escolha seu idioma preferido para a interface',
-    continue: 'Continuar',
-
-    uploadImages: 'Enviar Imagens',
-    pages: 'Páginas',
-
-    uploadTitle: 'Enviar Imagens para Tradução',
-    uploadDescription: 'Arraste e solte imagens aqui ou clique para navegar',
-    uploadHint: 'Suporta formatos JPEG, PNG, GIF e WebP',
-    selectFiles: 'Selecionar Arquivos',
-
-    noPages: 'Nenhuma página enviada ainda',
-    uploadFirst: 'Envie algumas imagens para começar',
-    deleteConfirm: 'Tem certeza de que deseja excluir esta página?',
-
-    translated: 'Traduzido',
-
-    textRegions: 'Regiões de Texto',
-    noTextExtracted: 'Nenhum texto extraído ainda',
-    uploadAndExtract: 'Envie uma imagem e clique em "Extrair Texto" para começar',
-    autoTranslate: 'Tradução Automática',
-    translating: 'Traduzindo...',
-
-    region: 'Região',
-    originalText: 'Texto Original',
-    translatedText: 'Texto Traduzido / Substituição',
-    editTranslation: 'Editar tradução',
-    removeRegion: 'Remover esta região',
-    save: 'Salvar',
-    cancel: 'Cancelar',
-    modified: 'Modificado',
-
-    apiKeyRequired: 'Chave API Necessária',
-    apiKeyDescription: 'Digite sua chave API do Google Gemini para usar o MonkeyTranslate',
-    getApiKey: 'Obtenha sua chave API de',
-    enterApiKey: 'Digite sua chave API',
-    saveApiKey: 'Salvar Chave API',
-
-    extractSuccess: 'Texto extraído com sucesso',
-    extractError: 'Falha ao extrair texto. Verifique sua configuração de chave API.',
-    translateError: 'Falha ao traduzir texto. Tente novamente.',
-    generateSuccess: 'Imagem gerada com sucesso! A visualização foi atualizada.',
-    generateError: 'Falha ao gerar imagem traduzida. Tente novamente.',
-    noTranslations: 'Nenhuma tradução para aplicar',
-
-    uploading: 'Enviando...',
-    configureApiKey: 'Configurar Chave API',
-    apiConnected: 'API Conectada',
-    apiKeyInvalid: 'Chave API Inválida',
-    apiKeyNotConfigured: 'Chave API Não Configurada',
-    apiKeyInstructions: 'Você precisa configurar sua chave API Gemini antes de usar o app. Clique em "Configurar Chave API" acima para instruções.',
-
-    // Upload zone
-    dropImagesHere: 'Solte imagens aqui ou clique para navegar',
-    dropImagesHereActive: 'Solte as imagens aqui...',
-    supportedFormats: 'Suporta PNG, JPG, GIF e WEBP (até 10MB por imagem)',
-    multipleUpload: 'Você pode carregar múltiplas imagens de uma vez',
-
-    // Page editor
-    extractText: 'Extrair Texto',
-    extracting: 'Extraindo...',
-    generateTranslatedImage: 'Gerar Imagem Traduzida',
-    generating: 'Gerando...',
-    downloadRegeneratedImage: 'Baixar Imagem Regenerada',
-    originalImage: 'Imagem Original',
-    regeneratedImage: 'Imagem Regenerada',
-    noRegeneratedImage: 'Nenhuma imagem regenerada ainda',
-    clickToGenerate: 'Clique em "Gerar Imagem Traduzida" para criar uma',
-    generateWithTranslations: 'Gerar imagem com traduções',
-    noImageAvailable: 'Nenhuma imagem regenerada disponível. Por favor gere uma primeiro.',
-
-    // Page list
-    deletePage: 'Excluir página',
-    expandPages: 'Expandir páginas',
-    collapsePages: 'Recolher páginas',
-
-    // API Key Modal
-    signInGoogle: 'Entre com sua conta do Google',
-    clickGetApiKey: 'Clique em "Obter Chave API" ou "Criar Chave API"',
-    copyApiKey: 'Copie sua chave API',
-    createEnvFile: 'Crie um arquivo chamado .env no diretório raiz do projeto',
-    addToEnvFile: 'Adicione esta linha ao arquivo .env:',
-    restartServer: 'Reinicie o servidor',
-    apiKeyNote: 'O arquivo .env já está no .gitignore, então sua chave API nunca será enviada para o controle de versão. Mantenha sua chave API privada e segura.',
-    hideInstructions: 'Ocultar Instruções',
-    showInstructions: 'Mostrar Instruções',
-    configureLater: 'Vou configurar mais tarde',
-    selectLanguage: 'Selecionar Idioma',
-
-    supportDevelopment: 'Apoiar o Desenvolvimento',
-
-    // Additional missing translations
-    translatedTag: 'Traduzido',
-    regions: 'regiões',
-    uploadError: 'Falha ao enviar imagens. Tente novamente.',
-    apiKeyRequiredTitle: 'Chave API Gemini Necessária',
-    apiKeyRequiredDescription: 'MonkeyTranslate requer uma chave API Gemini para funcionar',
-    apiKeyRequiredNote: 'Esta é uma aplicação de código aberto. Você precisa fornecer sua própria chave API do Google Gemini, que será armazenada localmente em sua máquina e nunca será compartilhada.',
-    howToGetApiKey: 'Como obter sua chave API:',
-    goToGoogleAIStudio: 'Ir para',
-
-    // Zoom controls
-    zoomIn: 'Ampliar',
-    zoomOut: 'Reduzir',
-    doubleClickToResetZoom: 'Duplo clique para redefinir o zoom',
-
-    // API Key Modal - Electron specific
-    enterApiKeyBelow: 'Digite sua chave API abaixo para começar.',
-    enterYourApiKey: 'Digite Sua Chave API',
-    currentApiKey: 'Chave API Atual:',
-    enterNewKeyBelow: 'Digite uma nova chave abaixo para substituí-la',
-    newApiKey: 'Nova Chave API',
-    geminiApiKey: 'Chave API Gemini',
-    getApiKeyButton: 'Obter Chave API',
-    saving: 'Salvando...',
-    saveAndContinue: 'Salvar e Continuar',
-    apiKeyPlaceholder: 'Cole sua chave API Gemini aqui...',
-    apiKeyEmpty: 'A chave API não pode estar vazia',
-    apiKeySaveError: 'Falha ao salvar a chave API ou reiniciar o servidor',
-    apiKeyDesktopOnly: 'O salvamento direto da chave API está disponível apenas no aplicativo desktop. Por favor, siga as instruções de configuração manual.',
-    apiKeySaveFailed: 'Falha ao salvar a chave API: ',
-    close: 'Fechar',
-    note: 'Nota',
-    googleAIStudio: 'Google AI Studio',
-    imageTooLarge: 'A imagem é muito grande para processar. Por favor, faça upload de uma imagem menor (recomendado: menos de 4K de resolução).',
-  },
-
-  ru: {
-    appTitle: 'MonkeyTranslate',
-    appSubtitle: 'Перевод текста изображений с помощью ИИ',
-
-    selectLanguageDescription: 'Выберите предпочитаемый язык интерфейса',
-    continue: 'Продолжить',
-
-    uploadImages: 'Загрузить изображения',
-    pages: 'Страницы',
-
-    uploadTitle: 'Загрузить изображения для перевода',
-    uploadDescription: 'Перетащите изображения сюда или нажмите для выбора',
-    uploadHint: 'Поддерживает форматы JPEG, PNG, GIF и WebP',
-    selectFiles: 'Выбрать файлы',
-
-    noPages: 'Пока нет загруженных страниц',
-    uploadFirst: 'Загрузите изображения для начала',
-    deleteConfirm: 'Вы уверены, что хотите удалить эту страницу?',
-
-    // Page editor
-    extractText: 'Извлечь Текст',
-    extracting: 'Извлечение...',
-    generateTranslatedImage: 'Создать Переведенное Изображение',
-    generating: 'Создание...',
-    downloadRegeneratedImage: 'Скачать Восстановленное Изображение',
-    originalImage: 'Исходное изображение',
-    regeneratedImage: 'Восстановленное изображение',
-    translated: 'Переведено',
-
-    textRegions: 'Текстовые области',
-    noTextExtracted: 'Текст еще не извлечен',
-    uploadAndExtract: 'Загрузите изображение и нажмите "Извлечь текст" для начала',
-    autoTranslate: 'Автоперевод',
-    translating: 'Перевод...',
-
-    region: 'Область',
-    originalText: 'Исходный текст',
-    translatedText: 'Переведенный / Заменяющий текст',
-    editTranslation: 'Редактировать перевод',
-    removeRegion: 'Удалить эту область',
-    save: 'Сохранить',
-    cancel: 'Отмена',
-    modified: 'Изменено',
-
-    apiKeyRequired: 'Требуется API ключ',
-    apiKeyDescription: 'Введите ваш API ключ Google Gemini для использования MonkeyTranslate',
-    getApiKey: 'Получите ваш API ключ от',
-    enterApiKey: 'Введите ваш API ключ',
-    saveApiKey: 'Сохранить API ключ',
-
-    extractSuccess: 'Текст успешно извлечен',
-    extractError: 'Ошибка извлечения текста. Проверьте настройки API ключа.',
-    translateError: 'Ошибка перевода текста. Попробуйте снова.',
-    generateSuccess: 'Изображение успешно создано! Предварительный просмотр обновлен.',
-    generateError: 'Ошибка создания переведенного изображения. Попробуйте снова.',
-    noTranslations: 'Нет переводов для применения',
-
-    uploading: 'Загрузка...',
-    configureApiKey: 'Настроить API ключ',
-    apiConnected: 'API подключен',
-    apiKeyInvalid: 'Недействительный API ключ',
-    apiKeyNotConfigured: 'API ключ не настроен',
-    apiKeyInstructions: 'Вам нужно настроить ваш API ключ Gemini перед использованием приложения. Нажмите "Настроить API ключ" выше для инструкций.',
-
-    // Upload zone
-    dropImagesHere: 'Перетащите изображения сюда или нажмите для выбора',
-    dropImagesHereActive: 'Перетащите изображения сюда...',
-    supportedFormats: 'Поддерживает PNG, JPG, GIF и WEBP (до 10МБ на изображение)',
-    multipleUpload: 'Вы можете загрузить несколько изображений одновременно',
-
-    // Page editor
-    noRegeneratedImage: 'Пока нет восстановленного изображения',
-    clickToGenerate: 'Нажмите "Создать переведенное изображение" для создания',
-    generateWithTranslations: 'Создать изображение с переводами',
-    noImageAvailable: 'Восстановленное изображение недоступно. Пожалуйста, сначала создайте его.',
-
-    // Page list
-    deletePage: 'Удалить страницу',
-    expandPages: 'Развернуть страницы',
-    collapsePages: 'Свернуть страницы',
-
-    // API Key Modal
-    signInGoogle: 'Войдите в свой аккаунт Google',
-    clickGetApiKey: 'Нажмите "Получить API ключ" или "Создать API ключ"',
-    copyApiKey: 'Скопируйте ваш API ключ',
-    createEnvFile: 'Создайте файл с именем .env в корневой директории проекта',
-    addToEnvFile: 'Добавьте эту строку в файл .env:',
-    restartServer: 'Перезапустите сервер',
-    apiKeyNote: 'Файл .env уже находится в .gitignore, поэтому ваш API ключ никогда не будет отправлен в систему контроля версий. Держите ваш API ключ в секрете и безопасности.',
-    hideInstructions: 'Скрыть инструкции',
-    showInstructions: 'Показать инструкции',
-    configureLater: 'Настрою позже',
-    selectLanguage: 'Выбрать язык',
-
-    supportDevelopment: 'Поддержать разработку',
-
-    // Additional missing translations
-    translatedTag: 'Переведено',
-    regions: 'области',
-    uploadError: 'Ошибка загрузки изображений. Попробуйте снова.',
-    apiKeyRequiredTitle: 'Требуется API ключ Gemini',
-    apiKeyRequiredDescription: 'MonkeyTranslate требует API ключ Gemini для работы',
-    apiKeyRequiredNote: 'Это приложение с открытым исходным кодом. Вам нужно предоставить свой собственный API ключ Google Gemini, который будет храниться локально на вашем компьютере и никогда не будет передан.',
-    howToGetApiKey: 'Как получить ваш API ключ:',
-    goToGoogleAIStudio: 'Перейти к',
-
-    // Zoom controls
-    zoomIn: 'Увеличить',
-    zoomOut: 'Уменьшить',
-    doubleClickToResetZoom: 'Двойной щелчок для сброса масштаба',
-
-    // API Key Modal - Electron specific
-    enterApiKeyBelow: 'Введите ваш API ключ ниже, чтобы начать.',
-    enterYourApiKey: 'Введите Ваш API Ключ',
-    currentApiKey: 'Текущий API Ключ:',
-    enterNewKeyBelow: 'Введите новый ключ ниже, чтобы заменить его',
-    newApiKey: 'Новый API Ключ',
-    geminiApiKey: 'API Ключ Gemini',
-    getApiKeyButton: 'Получить API Ключ',
-    saving: 'Сохранение...',
-    saveAndContinue: 'Сохранить и Продолжить',
-    apiKeyPlaceholder: 'Вставьте ваш API ключ Gemini здесь...',
-    apiKeyEmpty: 'API ключ не может быть пустым',
-    apiKeySaveError: 'Не удалось сохранить API ключ или перезапустить сервер',
-    apiKeyDesktopOnly: 'Прямое сохранение API ключа доступно только в настольном приложении. Пожалуйста, следуйте инструкциям по ручной настройке.',
-    apiKeySaveFailed: 'Не удалось сохранить API ключ: ',
-    close: 'Закрыть',
-    note: 'Примечание',
-    googleAIStudio: 'Google AI Studio',
-    imageTooLarge: 'Изображение слишком большое для обработки. Пожалуйста, загрузите изображение меньшего размера (рекомендуется: менее 4K разрешения).',
-  },
-
-  ja: {
-    appTitle: 'MonkeyTranslate',
-    appSubtitle: 'AI搭載画像テキスト翻訳',
-
-    selectLanguageDescription: 'インターフェースの言語を選択してください',
-    continue: '続行',
-
-    uploadImages: '画像をアップロード',
-    pages: 'ページ',
-
-    uploadTitle: '翻訳用画像をアップロード',
-    uploadDescription: '画像をここにドラッグ＆ドロップするか、クリックして参照',
-    uploadHint: 'JPEG、PNG、GIF、WebP形式をサポート',
-    selectFiles: 'ファイルを選択',
-
-    noPages: 'まだページがアップロードされていません',
-    uploadFirst: '開始するには画像をアップロードしてください',
-    deleteConfirm: 'このページを削除してもよろしいですか？',
-
-    translated: '翻訳済み',
-
-    textRegions: 'テキスト領域',
-    noTextExtracted: 'まだテキストが抽出されていません',
-    uploadAndExtract: '画像をアップロードして「テキストを抽出」をクリックして開始',
-    autoTranslate: '自動翻訳',
-    translating: '翻訳中...',
-
-    region: '領域',
-    originalText: '元のテキスト',
-    translatedText: '翻訳/置換テキスト',
-    editTranslation: '翻訳を編集',
-    removeRegion: 'この領域を削除',
-    save: '保存',
-    cancel: 'キャンセル',
-    modified: '変更済み',
-
-    apiKeyRequired: 'APIキーが必要',
-    apiKeyDescription: 'MonkeyTranslateを使用するにはGoogle Gemini APIキーを入力してください',
-    getApiKey: 'APIキーを取得：',
-    enterApiKey: 'APIキーを入力',
-    saveApiKey: 'APIキーを保存',
-
-    extractSuccess: 'テキストの抽出に成功しました',
-    extractError: 'テキストの抽出に失敗しました。APIキーの設定を確認してください。',
-    translateError: 'テキストの翻訳に失敗しました。再試行してください。',
-    generateSuccess: '画像の生成に成功しました！プレビューが更新されました。',
-    generateError: '翻訳画像の生成に失敗しました。再試行してください。',
-    noTranslations: '適用する翻訳がありません',
-
-    uploading: 'アップロード中...',
-    configureApiKey: 'APIキーを設定',
-    apiConnected: 'API接続済み',
-    apiKeyInvalid: '無効なAPIキー',
-    apiKeyNotConfigured: 'APIキーが設定されていません',
-    apiKeyInstructions: 'アプリを使用する前にGemini APIキーを設定する必要があります。上の「APIキーを設定」をクリックして手順を確認してください。',
-
-    // Upload zone
-    dropImagesHere: '画像をここにドロップするかクリックして参照',
-    dropImagesHereActive: '画像をここにドロップ...',
-    supportedFormats: 'PNG、JPG、GIF、WEBP対応（1画像最大10MB）',
-    multipleUpload: '複数の画像を一度にアップロードできます',
-
-    // Page editor
-    extractText: 'テキストを抽出',
-    extracting: '抽出中...',
-    generateTranslatedImage: '翻訳画像を生成',
-    generating: '生成中...',
-    downloadRegeneratedImage: '再生成画像をダウンロード',
-    originalImage: '元画像',
-    regeneratedImage: '再生成画像',
-    noRegeneratedImage: 'まだ再生成画像がありません',
-    clickToGenerate: '「翻訳画像を生成」をクリックして作成',
-    generateWithTranslations: '翻訳付き画像を生成',
-    noImageAvailable: '再生成画像がありません。まず生成してください。',
-
-    // Page list
-    deletePage: 'ページを削除',
-    expandPages: 'ページを展開',
-    collapsePages: 'ページを折りたたむ',
-
-    // API Key Modal
-    signInGoogle: 'Googleアカウントでサインイン',
-    clickGetApiKey: '「APIキーを取得」または「APIキーを作成」をクリック',
-    copyApiKey: 'APIキーをコピー',
-    createEnvFile: 'プロジェクトルートディレクトリに.envという名前のファイルを作成',
-    addToEnvFile: '.envファイルにこの行を追加:',
-    restartServer: 'サーバーを再起動',
-    apiKeyNote: '.envファイルは既に.gitignoreに含まれているため、APIキーがバージョン管理に送信されることはありません。APIキーは秘密にして安全に保管してください。',
-    hideInstructions: '手順を非表示',
-    showInstructions: '手順を表示',
-    configureLater: '後で設定します',
-    selectLanguage: '言語を選択',
-
-    supportDevelopment: '開発をサポート',
-
-    // Additional missing translations
-    translatedTag: '翻訳済み',
-    regions: '領域',
-    uploadError: '画像のアップロードに失敗しました。もう一度お試しください。',
-    apiKeyRequiredTitle: 'Gemini APIキーが必要',
-    apiKeyRequiredDescription: 'MonkeyTranslateは機能するためにGemini APIキーが必要です',
-    apiKeyRequiredNote: 'これはオープンソースアプリケーションです。独自のGoogle Gemini APIキーを提供する必要があります。このキーはローカルマシンに保存され、共有されることはありません。',
-    howToGetApiKey: 'APIキーの取得方法:',
-    goToGoogleAIStudio: 'に移動',
-
-    // Zoom controls
-    zoomIn: 'ズームイン',
-    zoomOut: 'ズームアウト',
-    doubleClickToResetZoom: 'ダブルクリックでズームをリセット',
-
-    // API Key Modal - Electron specific
-    enterApiKeyBelow: '開始するには、以下にAPIキーを入力してください。',
-    enterYourApiKey: 'APIキーを入力',
-    currentApiKey: '現在のAPIキー:',
-    enterNewKeyBelow: '新しいキーを以下に入力して置き換えます',
-    newApiKey: '新しいAPIキー',
-    geminiApiKey: 'Gemini APIキー',
-    getApiKeyButton: 'APIキーを取得',
-    saving: '保存中...',
-    saveAndContinue: '保存して続行',
-    apiKeyPlaceholder: 'Gemini APIキーをここに貼り付けてください...',
-    apiKeyEmpty: 'APIキーは空にできません',
-    apiKeySaveError: 'APIキーの保存またはサーバーの再起動に失敗しました',
-    apiKeyDesktopOnly: 'APIキーの直接保存はデスクトップアプリでのみ利用可能です。手動セットアップの手順に従ってください。',
-    apiKeySaveFailed: 'APIキーの保存に失敗しました: ',
-    close: '閉じる',
-    note: '注',
-    googleAIStudio: 'Google AI Studio',
-    imageTooLarge: '画像が大きすぎて処理できません。より小さい画像をアップロードしてください（推奨：4K解像度以下）。',
-  },
-
   ko: {
     appTitle: 'MonkeyTranslate',
     appSubtitle: 'AI 기반 이미지 텍스트 번역',
@@ -1108,6 +596,9 @@ export const translations = {
     translatedText: '번역된/대체 텍스트',
     editTranslation: '번역 편집',
     removeRegion: '이 영역 제거',
+    removed: '제거됨',
+    undo: '실행 취소',
+    permanentDelete: '영구 삭제',
     save: '저장',
     cancel: '취소',
     modified: '수정됨',
@@ -1123,6 +614,8 @@ export const translations = {
     translateError: '텍스트 번역 실패. 다시 시도하세요.',
     generateSuccess: '이미지 생성 성공! 미리보기가 업데이트되었습니다.',
     generateError: '번역된 이미지 생성 실패. 다시 시도하세요.',
+    renderTimeout: '이미지 렌더링이 시간 초과되었습니다. 큰 이미지나 복잡한 번역에서 발생할 수 있습니다. 더 작은 이미지나 더 적은 텍스트 영역으로 시도해보세요.',
+    networkError: '이미지 렌더링 중 네트워크 오류가 발생했습니다. 인터넷 연결을 확인하고 다시 시도하세요.',
     noTranslations: '적용할 번역이 없습니다',
 
     uploading: '업로드 중...',
@@ -1239,6 +732,9 @@ export const translations = {
     translatedText: '翻译/替换文本',
     editTranslation: '编辑翻译',
     removeRegion: '删除此区域',
+    removed: '已移除',
+    undo: '撤销',
+    permanentDelete: '永久删除',
     save: '保存',
     cancel: '取消',
     modified: '已修改',
@@ -1254,6 +750,8 @@ export const translations = {
     translateError: '文本翻译失败。请重试。',
     generateSuccess: '图片生成成功！预览已更新。',
     generateError: '翻译图片生成失败。请重试。',
+    renderTimeout: '图像渲染超时。这可能发生在大型图像或复杂翻译时。请尝试使用较小的图像或较少的文本区域。',
+    networkError: '图像渲染期间发生网络错误。请检查您的互联网连接并重试。',
     noTranslations: '没有要应用的翻译',
 
     uploading: '上传中...',
@@ -1338,268 +836,6 @@ export const translations = {
     imageTooLarge: '图像太大，无法处理。请上传较小的图像（推荐：4K分辨率以下）。',
   },
 
-  ar: {
-    appTitle: 'MonkeyTranslate',
-    appSubtitle: 'ترجمة نص الصور بالذكاء الاصطناعي',
-
-    selectLanguageDescription: 'اختر لغتك المفضلة للواجهة',
-    continue: 'متابعة',
-
-    uploadImages: 'رفع الصور',
-    pages: 'الصفحات',
-
-    uploadTitle: 'رفع الصور للترجمة',
-    uploadDescription: 'اسحب وأفلت الصور هنا أو انقر للتصفح',
-    uploadHint: 'يدعم تنسيقات JPEG و PNG و GIF و WebP',
-    selectFiles: 'اختيار الملفات',
-
-    noPages: 'لا توجد صفحات مرفوعة بعد',
-    uploadFirst: 'ارفع بعض الصور للبدء',
-    deleteConfirm: 'هل أنت متأكد من حذف هذه الصفحة؟',
-
-    translated: 'مترجم',
-
-    textRegions: 'مناطق النص',
-    noTextExtracted: 'لم يتم استخراج نص بعد',
-    uploadAndExtract: 'ارفع صورة وانقر على "استخراج النص" للبدء',
-    autoTranslate: 'ترجمة تلقائية',
-    translating: 'جاري الترجمة...',
-
-    region: 'منطقة',
-    originalText: 'النص الأصلي',
-    translatedText: 'النص المترجم / البديل',
-    editTranslation: 'تحرير الترجمة',
-    removeRegion: 'إزالة هذه المنطقة',
-    save: 'حفظ',
-    cancel: 'إلغاء',
-    modified: 'معدّل',
-
-    apiKeyRequired: 'مطلوب مفتاح API',
-    apiKeyDescription: 'يرجى إدخال مفتاح Google Gemini API لاستخدام MonkeyTranslate',
-    getApiKey: 'احصل على مفتاح API من',
-    enterApiKey: 'أدخل مفتاح API',
-    saveApiKey: 'حفظ مفتاح API',
-
-    extractSuccess: 'تم استخراج النص بنجاح',
-    extractError: 'فشل في استخراج النص. يرجى التحقق من إعدادات مفتاح API.',
-    translateError: 'فشل في ترجمة النص. يرجى المحاولة مرة أخرى.',
-    generateSuccess: 'تم إنشاء الصورة بنجاح! تم تحديث المعاينة.',
-    generateError: 'فشل في إنشاء الصورة المترجمة. يرجى المحاولة مرة أخرى.',
-    noTranslations: 'لا توجد ترجمات للتطبيق',
-
-    uploading: 'جاري الرفع...',
-    configureApiKey: 'تكوين مفتاح API',
-    apiConnected: 'API متصل',
-    apiKeyInvalid: 'مفتاح API غير صالح',
-    apiKeyNotConfigured: 'مفتاح API غير مكون',
-    apiKeyInstructions: 'تحتاج إلى تكوين مفتاح Gemini API الخاص بك قبل استخدام التطبيق. انقر على "تكوين مفتاح API" أعلاه للحصول على التعليمات.',
-
-    // Upload zone
-    dropImagesHere: 'اسحب الصور هنا أو انقر للتصفح',
-    dropImagesHereActive: 'اسحب الصور هنا...',
-    supportedFormats: 'يدعم PNG و JPG و GIF و WEBP (حتى 10 ميجابايت لكل صورة)',
-    multipleUpload: 'يمكنك رفع عدة صور في مرة واحدة',
-
-    // Page editor
-    extractText: 'استخراج النص',
-    extracting: 'جاري الاستخراج...',
-    generateTranslatedImage: 'إنشاء صورة مترجمة',
-    generating: 'جاري الإنشاء...',
-    downloadRegeneratedImage: 'تحميل الصورة المُعاد إنشاؤها',
-    originalImage: 'الصورة الأصلية',
-    regeneratedImage: 'الصورة المُعاد إنشاؤها',
-    noRegeneratedImage: 'لا توجد صورة مُعاد إنشاؤها بعد',
-    clickToGenerate: 'انقر على "إنشاء صورة مترجمة" للإنشاء',
-    generateWithTranslations: 'إنشاء صورة مع الترجمات',
-    noImageAvailable: 'لا توجد صورة مُعاد إنشاؤها متاحة. يرجى إنشاء واحدة أولاً.',
-
-    // Page list
-    deletePage: 'حذف الصفحة',
-    expandPages: 'توسيع الصفحات',
-    collapsePages: 'طي الصفحات',
-
-    // API Key Modal
-    signInGoogle: 'سجل الدخول بحساب Google الخاص بك',
-    clickGetApiKey: 'انقر على "الحصول على مفتاح API" أو "إنشاء مفتاح API"',
-    copyApiKey: 'انسخ مفتاح API الخاص بك',
-    createEnvFile: 'أنشئ ملفاً باسم .env في الدليل الجذر للمشروع',
-    addToEnvFile: 'أضف هذا السطر إلى ملف .env:',
-    restartServer: 'أعد تشغيل الخادم',
-    apiKeyNote: 'ملف .env موجود بالفعل في .gitignore، لذا لن يتم إرسال مفتاح API الخاص بك إلى نظام التحكم في الإصدارات. احتفظ بمفتاح API الخاص بك سرياً وآمناً.',
-    hideInstructions: 'إخفاء التعليمات',
-    showInstructions: 'إظهار التعليمات',
-    configureLater: 'سأقوم بتكوينه لاحقاً',
-    selectLanguage: 'اختر اللغة',
-
-    supportDevelopment: 'دعم التطوير',
-
-    // Additional missing translations
-    translatedTag: 'مترجم',
-    regions: 'مناطق',
-    uploadError: 'فشل في رفع الصور. يرجى المحاولة مرة أخرى.',
-    apiKeyRequiredTitle: 'مطلوب مفتاح API Gemini',
-    apiKeyRequiredDescription: 'MonkeyTranslate يتطلب مفتاح API Gemini للعمل',
-    apiKeyRequiredNote: 'هذا تطبيق مفتوح المصدر. تحتاج إلى توفير مفتاح Google Gemini API الخاص بك، والذي سيتم تخزينه محلياً على جهازك ولن يتم مشاركته أبداً.',
-    howToGetApiKey: 'كيفية الحصول على مفتاح API الخاص بك:',
-    goToGoogleAIStudio: 'انتقل إلى',
-
-    // Zoom controls
-    zoomIn: 'تكبير',
-    zoomOut: 'تصغير',
-    doubleClickToResetZoom: 'انقر نقرًا مزدوجًا لإعادة تعيين التكبير',
-
-    // API Key Modal - Electron specific
-    enterApiKeyBelow: 'أدخل مفتاح API الخاص بك أدناه للبدء.',
-    enterYourApiKey: 'أدخل مفتاح API الخاص بك',
-    currentApiKey: 'مفتاح API الحالي:',
-    enterNewKeyBelow: 'أدخل مفتاحًا جديدًا أدناه لاستبداله',
-    newApiKey: 'مفتاح API جديد',
-    geminiApiKey: 'مفتاح API Gemini',
-    getApiKeyButton: 'الحصول على مفتاح API',
-    saving: 'جاري الحفظ...',
-    saveAndContinue: 'حفظ ومتابعة',
-    apiKeyPlaceholder: 'الصق مفتاح API الخاص بـ Gemini هنا...',
-    apiKeyEmpty: 'لا يمكن أن يكون مفتاح API فارغًا',
-    apiKeySaveError: 'فشل حفظ مفتاح API أو إعادة تشغيل الخادم',
-    apiKeyDesktopOnly: 'حفظ مفتاح API المباشر متاح فقط في تطبيق سطح المكتب. يرجى اتباع تعليمات الإعداد اليدوي.',
-    apiKeySaveFailed: 'فشل حفظ مفتاح API: ',
-    close: 'إغلاق',
-    note: 'ملاحظة',
-    googleAIStudio: 'Google AI Studio',
-    imageTooLarge: 'الصورة كبيرة جدًا للمعالجة. يرجى تحميل صورة أصغر (موصى به: أقل من 4K دقة).',
-  },
-
-  hi: {
-    appTitle: 'MonkeyTranslate',
-    appSubtitle: 'AI-संचालित छवि पाठ अनुवाद',
-
-    selectLanguageDescription: 'इंटरफ़ेस के लिए अपनी पसंदीदा भाषा चुनें',
-    continue: 'जारी रखें',
-
-    uploadImages: 'छवियां अपलोड करें',
-    pages: 'पृष्ठ',
-
-    uploadTitle: 'अनुवाद के लिए छवियां अपलोड करें',
-    uploadDescription: 'छवियों को यहां खींचें और छोड़ें या ब्राउज़ करने के लिए क्लिक करें',
-    uploadHint: 'JPEG, PNG, GIF और WebP प्रारूपों का समर्थन करता है',
-    selectFiles: 'फ़ाइलें चुनें',
-
-    noPages: 'अभी तक कोई पृष्ठ अपलोड नहीं किया गया',
-    uploadFirst: 'शुरू करने के लिए कुछ छवियां अपलोड करें',
-    deleteConfirm: 'क्या आप वाकई इस पृष्ठ को हटाना चाहते हैं?',
-
-    translated: 'अनुवादित',
-
-    textRegions: 'पाठ क्षेत्र',
-    noTextExtracted: 'अभी तक कोई पाठ निकाला नहीं गया',
-    uploadAndExtract: 'एक छवि अपलोड करें और शुरू करने के लिए "पाठ निकालें" पर क्लिक करें',
-    autoTranslate: 'स्वचालित अनुवाद',
-    translating: 'अनुवाद हो रहा है...',
-
-    region: 'क्षेत्र',
-    originalText: 'मूल पाठ',
-    translatedText: 'अनुवादित / प्रतिस्थापन पाठ',
-    editTranslation: 'अनुवाद संपादित करें',
-    removeRegion: 'इस क्षेत्र को हटाएं',
-    save: 'सहेजें',
-    cancel: 'रद्द करें',
-    modified: 'संशोधित',
-
-    apiKeyRequired: 'API कुंजी आवश्यक',
-    apiKeyDescription: 'MonkeyTranslate का उपयोग करने के लिए कृपया अपनी Google Gemini API कुंजी दर्ज करें',
-    getApiKey: 'अपनी API कुंजी प्राप्त करें',
-    enterApiKey: 'अपनी API कुंजी दर्ज करें',
-    saveApiKey: 'API कुंजी सहेजें',
-
-    extractSuccess: 'पाठ सफलतापूर्वक निकाला गया',
-    extractError: 'पाठ निकालने में विफल। कृपया अपनी API कुंजी कॉन्फ़िगरेशन जांचें।',
-    translateError: 'पाठ अनुवाद में विफल। कृपया पुनः प्रयास करें।',
-    generateSuccess: 'छवि सफलतापूर्वक बनाई गई! पूर्वावलोकन अपडेट किया गया है।',
-    generateError: 'अनुवादित छवि बनाने में विफल। कृपया पुनः प्रयास करें।',
-    noTranslations: 'लागू करने के लिए कोई अनुवाद नहीं',
-
-    uploading: 'अपलोड हो रहा है...',
-    configureApiKey: 'API की कॉन्फ़िगर करें',
-    apiConnected: 'API कनेक्ट हो गया',
-    apiKeyInvalid: 'अमान्य API की',
-    apiKeyNotConfigured: 'API की कॉन्फ़िगर नहीं की गई',
-    apiKeyInstructions: 'ऐप का उपयोग करने से पहले आपको अपनी Gemini API की कॉन्फ़िगर करनी होगी। निर्देशों के लिए ऊपर "API की कॉन्फ़िगर करें" पर क्लिक करें।',
-
-    // Upload zone
-    dropImagesHere: 'छवियों को यहाँ खींचें या ब्राउज़ करने के लिए क्लिक करें',
-    dropImagesHereActive: 'छवियों को यहाँ खींचें...',
-    supportedFormats: 'PNG, JPG, GIF और WEBP समर्थित (प्रति छवि अधिकतम 10MB)',
-    multipleUpload: 'आप एक साथ कई छवियां अपलोड कर सकते हैं',
-
-    // Page editor
-    extractText: 'टेक्स्ट निकालें',
-    extracting: 'निकाला जा रहा है...',
-    generateTranslatedImage: 'अनुवादित छवि जेनरेट करें',
-    generating: 'जेनरेट हो रहा है...',
-    downloadRegeneratedImage: 'पुनर्जनित छवि डाउनलोड करें',
-    originalImage: 'मूल छवि',
-    regeneratedImage: 'पुनर्जनित छवि',
-    noRegeneratedImage: 'अभी तक कोई पुनर्जनित छवि नहीं',
-    clickToGenerate: 'बनाने के लिए "अनुवादित छवि जेनरेट करें" पर क्लिक करें',
-    generateWithTranslations: 'अनुवाद के साथ छवि जेनरेट करें',
-    noImageAvailable: 'कोई पुनर्जनित छवि उपलब्ध नहीं है। कृपया पहले एक जेनरेट करें।',
-
-    // Page list
-    deletePage: 'पृष्ठ हटाएं',
-    expandPages: 'पृष्ठ विस्तृत करें',
-    collapsePages: 'पृष्ठ संक्षिप्त करें',
-
-    // API Key Modal
-    signInGoogle: 'अपने Google खाते से साइन इन करें',
-    clickGetApiKey: '"API की प्राप्त करें" या "API की बनाएं" पर क्लिक करें',
-    copyApiKey: 'अपनी API की कॉपी करें',
-    createEnvFile: 'प्रोजेक्ट रूट डायरेक्टरी में .env नाम की फ़ाइल बनाएं',
-    addToEnvFile: '.env फ़ाइल में यह लाइन जोड़ें:',
-    restartServer: 'सर्वर को पुनः आरंभ करें',
-    apiKeyNote: '.env फ़ाइल पहले से ही .gitignore में है, इसलिए आपकी API की कभी भी संस्करण नियंत्रण में कमिट नहीं होगी। अपनी API की को निजी और सुरक्षित रखें।',
-    hideInstructions: 'निर्देश छुपाएं',
-    showInstructions: 'निर्देश दिखाएं',
-    configureLater: 'मैं इसे बाद में कॉन्फ़िगर करूंगा',
-    selectLanguage: 'भाषा चुनें',
-
-    supportDevelopment: 'विकास का समर्थन करें',
-
-    // Additional missing translations
-    translatedTag: 'अनुवादित',
-    regions: 'क्षेत्र',
-    uploadError: 'छवियां अपलोड करने में विफल। कृपया पुनः प्रयास करें।',
-    apiKeyRequiredTitle: 'Gemini API कुंजी आवश्यक',
-    apiKeyRequiredDescription: 'MonkeyTranslate को काम करने के लिए Gemini API कुंजी की आवश्यकता है',
-    apiKeyRequiredNote: 'यह एक ओपन-सोर्स एप्लिकेशन है। आपको अपनी खुद की Google Gemini API कुंजी प्रदान करनी होगी, जो आपकी मशीन पर स्थानीय रूप से संग्रहीत की जाएगी और कभी साझा नहीं की जाएगी।',
-    howToGetApiKey: 'अपनी API कुंजी कैसे प्राप्त करें:',
-    goToGoogleAIStudio: 'पर जाएं',
-
-    // Zoom controls
-    zoomIn: 'ज़ूम इन',
-    zoomOut: 'ज़ूम आउट',
-    doubleClickToResetZoom: 'ज़ूम रीसेट करने के लिए डबल क्लिक करें',
-
-    // API Key Modal - Electron specific
-    enterApiKeyBelow: 'शुरू करने के लिए नीचे अपनी API कुंजी दर्ज करें।',
-    enterYourApiKey: 'अपनी API कुंजी दर्ज करें',
-    currentApiKey: 'वर्तमान API कुंजी:',
-    enterNewKeyBelow: 'इसे बदलने के लिए नीचे एक नई कुंजी दर्ज करें',
-    newApiKey: 'नई API कुंजी',
-    geminiApiKey: 'Gemini API कुंजी',
-    getApiKeyButton: 'API कुंजी प्राप्त करें',
-    saving: 'सहेजा जा रहा है...',
-    saveAndContinue: 'सहेजें और जारी रखें',
-    apiKeyPlaceholder: 'अपनी Gemini API कुंजी यहाँ पेस्ट करें...',
-    apiKeyEmpty: 'API कुंजी खाली नहीं हो सकती',
-    apiKeySaveError: 'API कुंजी सहेजने या सर्वर को पुनरारंभ करने में विफल',
-    apiKeyDesktopOnly: 'API कुंजी का प्रत्यक्ष सहेजना केवल डेस्कटॉप ऐप में उपलब्ध है। कृपया मैनुअल सेटअप निर्देशों का पालन करें।',
-    apiKeySaveFailed: 'API कुंजी सहेजने में विफल: ',
-    close: 'बंद करें',
-    note: 'नोट',
-    googleAIStudio: 'Google AI Studio',
-    imageTooLarge: 'छवि प्रसंस्करण के लिए बहुत बड़ी है। कृपया एक छोटी छवि अपलोड करें (अनुशंसित: 4K रिज़ॉल्यूशन से कम)।',
-  },
-
   vi: {
     appTitle: 'MonkeyTranslate',
     appSubtitle: 'Dịch văn bản hình ảnh bằng AI',
@@ -1632,6 +868,9 @@ export const translations = {
     translatedText: 'Văn bản đã dịch / Thay thế',
     editTranslation: 'Chỉnh sửa bản dịch',
     removeRegion: 'Xóa vùng này',
+    removed: 'Đã xóa',
+    undo: 'Hoàn tác',
+    permanentDelete: 'Xóa vĩnh viễn',
     save: 'Lưu',
     cancel: 'Hủy',
     modified: 'Đã sửa đổi',
@@ -1647,6 +886,8 @@ export const translations = {
     translateError: 'Không thể dịch văn bản. Vui lòng thử lại.',
     generateSuccess: 'Tạo hình ảnh thành công! Bản xem trước đã được cập nhật.',
     generateError: 'Không thể tạo hình ảnh đã dịch. Vui lòng thử lại.',
+    renderTimeout: 'Quá trình render hình ảnh đã hết thời gian chờ. Điều này có thể xảy ra với hình ảnh lớn hoặc bản dịch phức tạp. Vui lòng thử với hình ảnh nhỏ hơn hoặc ít vùng văn bản hơn.',
+    networkError: 'Lỗi mạng trong quá trình render hình ảnh. Vui lòng kiểm tra kết nối internet và thử lại.',
     noTranslations: 'Không có bản dịch nào để áp dụng',
 
     uploading: 'Đang tải lên...',

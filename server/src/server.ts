@@ -16,8 +16,10 @@ app.use(cors({
   origin: ['http://localhost:5173', 'http://localhost:3000', 'file://'], // Allow Electron
   credentials: true
 }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' })); // Increase limit for large image data
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
+// No timeout limits for image rendering operations
 
 // Check for Gemini API key
 let GEMINI_API_KEY = process.env.GEMINI_API_KEY;
@@ -49,19 +51,18 @@ async function validateApiKey(): Promise<boolean> {
     const { GoogleGenerativeAI } = await import('@google/generative-ai');
     const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
-    // Try to make a minimal API call to validate the key with a timeout
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    // Use the same model selection logic as the service
+    const useProdVersion = process.env.USE_PROD_GEMINI === 'true' ||
+                          (process.env.NODE_ENV === 'development' && process.env.USE_PROD_GEMINI !== 'false');
 
-    // Add timeout to prevent hanging
-    const validationPromise = model.generateContent({
+    const modelName = useProdVersion ? 'gemini-2.5-pro' : 'gemini-1.5-flash';
+
+    // Try to make a minimal API call to validate the key
+    const model = genAI.getGenerativeModel({ model: modelName });
+
+    await model.generateContent({
       contents: [{ role: 'user', parts: [{ text: 'hi' }] }]
     });
-
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Validation timeout')), 10000)
-    );
-
-    await Promise.race([validationPromise, timeoutPromise]);
 
     apiKeyValid = true;
     lastValidationTime = now;
@@ -78,7 +79,7 @@ async function validateApiKey(): Promise<boolean> {
       return false;
     }
 
-    // For timeout or other errors (network issues, etc.), don't cache the result
+    // For network issues or other errors, don't cache the result
     // Return false but don't update apiKeyValid
     console.warn('API key validation failed:', error.message);
     return false;

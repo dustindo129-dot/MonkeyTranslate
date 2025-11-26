@@ -7,6 +7,7 @@ import { UploadZone } from './components/UploadZone';
 import { PageList } from './components/PageList';
 import { PageEditor } from './components/PageEditor';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
+import { EditingProvider } from './contexts/EditingContext';
 import { LanguageSelector } from './components/LanguageSelector';
 import { AlertCircle, Coffee } from 'lucide-react';
 
@@ -202,7 +203,9 @@ function AppContent() {
       {/* Main content */}
       <main className="flex-1 overflow-hidden flex flex-col">
         {selectedPage ? (
+          <EditingProvider>
           <PageEditor page={selectedPage} onUpdatePage={handleUpdatePage} />
+          </EditingProvider>
         ) : (
           <div className="flex-1 flex items-center justify-center p-8">
             <div className="max-w-2xl w-full">

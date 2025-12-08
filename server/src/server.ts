@@ -33,6 +33,10 @@ export function updateApiKey(newKey: string) {
   // Clear validation cache when key changes
   apiKeyValid = null;
   lastValidationTime = 0;
+  // Reinitialize GeminiClient with the new key
+  if (newKey) {
+    initializeGeminiClient(newKey);
+  }
 }
 
 // Validate API key by making a test call
